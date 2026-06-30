@@ -111,6 +111,9 @@ body:not(.dark) #charttip{--tip-bg:#fff;--tip-fg:#14213d;border-color:#cdd5e0;bo
 #charttip .tip-sw{width:8px;height:8px;border-radius:50%;flex:none}
 #toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(8px);background:#1a2638;color:#e6e9ef;padding:9px 18px;border-radius:8px;font-size:14px;z-index:9999;pointer-events:none;opacity:0;transition:opacity .2s,transform .2s;max-width:min(360px,90vw);text-align:center;box-shadow:0 4px 16px rgba(0,0,0,.3)}
 #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+#lbl-overlay{position:fixed;z-index:30;background:var(--bg,#fff);border:1px solid var(--border,#cdd5e0);border-radius:8px;padding:6px 10px;font-size:13px;box-shadow:0 3px 12px rgba(0,0,0,.18);resize:both;overflow:auto;min-width:100px;min-height:32px;cursor:move;user-select:none;box-sizing:border-box;display:none}
+body.dark #lbl-overlay{background:#0f1825;border-color:#2a3547}
+#lbl-overlay::after{content:"\2921";position:absolute;right:4px;bottom:1px;font-size:11px;line-height:1;color:var(--muted,#9aa3b2);opacity:.5;pointer-events:none}
 #formulatip{position:fixed;pointer-events:none;z-index:55;background:var(--tip-bg,#1a2535);color:var(--tip-fg,#e6e9ef);border:1px solid #3a4a5e;border-radius:6px;padding:7px 11px;font-size:13px;line-height:1.5;display:none;box-shadow:0 3px 12px rgba(0,0,0,.35);max-width:320px;white-space:normal}
 #formulatip .ftip-lbl{font-weight:600;color:#9aa3b2;font-size:12px;letter-spacing:.3px;text-transform:uppercase;margin-bottom:3px}
 body:not(.dark) #formulatip{--tip-bg:#fff;--tip-fg:#14213d;border-color:#cdd5e0;box-shadow:0 3px 12px rgba(0,0,0,.12)}
@@ -209,6 +212,7 @@ body:not(.dark) .lgon-row td{background:#e8f5e9!important}body.dark .lgon-row td
    <label class="muted" title="rebase each $ series to 100 at the start of the range"><input type="checkbox" id="idx"> index to 100</label>
    <label class="muted" title="show quarter-over-quarter absolute change instead of level"><input type="checkbox" id="qoqdelta"> QoQ Δ</label>
    <label class="muted" title="divide each $ series by total assets (RCFD2170), producing a % ratio"><input type="checkbox" id="normbyassets"> ÷ assets</label>
+   <label class="muted" title="show end-of-line series labels in a draggable overlay"><input type="checkbox" id="inlinelbls"> inline labels</label>
    <span class="muted" style="font-size:13px;white-space:nowrap">⟵<input id="reflineval" type="text" placeholder="ref line e.g. 8 or 5e6" style="width:100px;font-size:13px;padding:1px 4px;border:1px solid var(--border,#ccc);background:inherit;color:inherit;border-radius:3px"><input id="reflinelbl" type="text" placeholder="label" style="width:60px;font-size:13px;padding:1px 4px;border:1px solid var(--border,#ccc);background:inherit;color:inherit;border-radius:3px"><button id="reflineset" class="sec" style="padding:1px 6px;font-size:13px">Set</button><button id="reflineclr" class="sec" style="padding:1px 6px;font-size:13px">✕</button></span>
    <button id="csv" class="sec">Export</button><button id="svgexport" class="sec" style="padding:3px 8px;font-size:13px" title="Download chart as SVG file">📷 SVG</button><button id="cplink" class="sec" style="padding:3px 8px;font-size:13px" title="Copy shareable link to this view">🔗 Link</button></div>
   <div id="tbl"></div>
@@ -217,7 +221,7 @@ body:not(.dark) .lgon-row td{background:#e8f5e9!important}body.dark .lgon-row td
    <textarea id="sql">SELECT quarter_end, value FROM t WHERE entity_id='ALL' AND mdrm='COMB2170' ORDER BY quarter_end;</textarea>
    <div style="margin-top:8px"><button id="runsql" class="sec">Run</button> <button id="sqlcsv" class="sec">Export result</button></div>
    <div id="sqlout"></div></details>
-  <div class="credit">Built by Austin Fahrenkopf &middot; data: public FFIEC filings &middot; Built 2026-06-29 19:58</div>
+  <div class="credit">Built by Austin Fahrenkopf &middot; data: public FFIEC filings &middot; Built 2026-06-30 09:44</div>
  </div>
 </div>
 <div id="formmodal" class="modal" style="display:none"><div class="modalbox">
@@ -277,6 +281,9 @@ const st=m=>document.getElementById('status').textContent=m;
 const _pb=document.getElementById('pbar');const pbar=pct=>{if(!_pb)return;_pb.style.width=pct+'%';if(pct>=100){setTimeout(()=>{_pb.style.opacity='0';setTimeout(()=>{_pb.style.display='none';},400);},300);}};
 let _reflineVal=null,_reflineLbl='';
 let _idxBase=null;
+let _lblDrag=null;
+window._inlineLbls=false;window._lblBoxLeft=null;window._lblBoxTop=null;window._lblBoxW=0;window._lblBoxH=0;
+try{window._inlineLbls=localStorage.getItem('ffiec_call_inlinelbls')==='1';window._lblBoxLeft=+localStorage.getItem('ffiec_call_lblboxleft')||null;window._lblBoxTop=+localStorage.getItem('ffiec_call_lblboxtop')||null;window._lblBoxW=+localStorage.getItem('ffiec_call_lblboxw')||0;window._lblBoxH=+localStorage.getItem('ffiec_call_lblboxh')||0;}catch(_){}
 const COLORS=['#1b7f3b','#e07a1f','#2b6cb0','#b83280','#6b46c1','#d69e2e','#0f766e','#be123c'];
 const RECESSIONS=[['1990-09-30','1991-03-31','1990-91'],['2001-03-31','2001-09-30','2001'],['2007-12-31','2009-06-30','GFC'],['2020-03-31','2020-12-31','COVID'],['2023-03-31','2023-06-30','Reg. Banking']];
 const DK=()=>document.body.classList.contains('dark');
@@ -337,6 +344,7 @@ const PCTC=new Set(['RCFA7204','RCFA7205','RCFA7206','RCFAH036','RCFAP793',
 'RCON7204','RCON7205','RCON7206','RCON7273','RCON7274','RCON7275',
 'RCOW7205','RCOW7206','RCOWP793']);
 const short=lbl=>{const i=lbl.indexOf('▸');return (i>=0?lbl.slice(i+1):lbl).replace(/\s*\(.*\)\s*$/,'').trim();};
+function _esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 const sqlList=a=>a.map(x=>`'${String(x).replace(/'/g,"''")}'`).join(',');
 // MEDIUM-2: date-based quarter helpers — quarter strings are "YYYY-MM-DD" (end-of-quarter).
 function prevQtr(q){if(!q)return null;const m=q.slice(5,7);return m==='03'?`${+q.slice(0,4)-1}-12-31`:m==='06'?`${q.slice(0,4)}-03-31`:m==='09'?`${q.slice(0,4)}-06-30`:`${q.slice(0,4)}-09-30`;}
@@ -632,7 +640,7 @@ async function init(){try{
  ['1y','5y','10y'].forEach((id,k)=>{const btn=document.getElementById(`preset${id}`);if(btn)btn.onclick=()=>{if(!Qall.length)return;const n=[4,20,40][k];rangeSel={a:Math.max(0,Qall.length-n),b:Qall.length-1};syncSlider();draw();};});
  document.getElementById('rfrom').onchange=()=>{const q=document.getElementById('rfrom').value.trim();const i=Qall.indexOf(q);if(i>=0){rangeSel.a=Math.min(i,rangeSel.b);syncSlider();draw();}};
  document.getElementById('rto').onchange=()=>{const q=document.getElementById('rto').value.trim();const i=Qall.indexOf(q);if(i>=0){rangeSel.b=Math.max(i,rangeSel.a);syncSlider();draw();}};
- document.getElementById('idx').onchange=draw;document.getElementById('qoqdelta').onchange=draw;document.getElementById('normbyassets').onchange=draw;document.getElementById('reflineset').onclick=()=>{const v=parseFloat(document.getElementById('reflineval').value);if(!isNaN(v)){_reflineVal=v;_reflineLbl=document.getElementById('reflinelbl').value.trim()||String(v);}draw();};document.getElementById('reflineclr').onclick=()=>{_reflineVal=null;document.getElementById('reflineval').value='';document.getElementById('reflinelbl').value='';draw();};
+ document.getElementById('idx').onchange=draw;document.getElementById('qoqdelta').onchange=draw;document.getElementById('normbyassets').onchange=draw;{const il=document.getElementById('inlinelbls');if(il){il.checked=(window._inlineLbls!==false);il.onchange=()=>{window._inlineLbls=il.checked;try{localStorage.setItem('ffiec_call_inlinelbls',il.checked?'1':'0');}catch(_){}draw();};}}document.getElementById('reflineset').onclick=()=>{const v=parseFloat(document.getElementById('reflineval').value);if(!isNaN(v)){_reflineVal=v;_reflineLbl=document.getElementById('reflinelbl').value.trim()||String(v);}draw();};document.getElementById('reflineclr').onclick=()=>{_reflineVal=null;document.getElementById('reflineval').value='';document.getElementById('reflinelbl').value='';draw();};
  (function(){const sp=document.getElementById('railsplit');let drag=false;
   sp.addEventListener('mousedown',e=>{drag=true;e.preventDefault();document.body.style.userSelect='none';});
   window.addEventListener('mousemove',e=>{if(!drag)return;const w=Math.min(820,Math.max(300,e.clientX));document.documentElement.style.setProperty('--railw',w+'px');});
@@ -661,7 +669,7 @@ function renderChips(){const c=document.getElementById('chips');if(!active.lengt
  const rb=document.getElementById('reportbtn');if(rb)rb.disabled=!(active.length===1&&active[0].id.startsWith('BANK:'));}
 const saveMeasures=()=>{try{localStorage.setItem('ffiec_call_measures',JSON.stringify(measures.filter(m=>!m.code.startsWith('CALC_')).map(m=>({code:m.code,label:m.label,pct:m.pct}))));}catch{}};
 function renderMeasures(){const c=document.getElementById('mchips');if(!measures.length){c.innerHTML='<span class="muted">none</span>';return;}
- c.innerHTML=measures.map((m,i)=>`<span class="chip"><b>${m.label}</b> <span class="muted">${m.pct?'%':'$'}</span><span class="x" data-i="${i}">✕</span></span>`).join('');
+ c.innerHTML=measures.map((m,i)=>`<span class="chip"><span class="sw" style="background:${COLORS[i%COLORS.length]}"></span><b>${m.label}</b> <span class="muted">${m.pct?'%':'$'}</span><span class="x" data-i="${i}">✕</span></span>`).join('');
  c.querySelectorAll('.x').forEach(x=>x.onclick=()=>{const code=measures[+x.dataset.i].code;measures.splice(+x.dataset.i,1);markTree();renderMeasures();scheduleRecompute();saveMeasures();});}
 function renderPeerBuilder(){const c=document.getElementById('pmembers');if(!peerMembers.length){c.innerHTML='<span class="muted">none</span>';return;}
  c.innerHTML=peerMembers.map((a,i)=>`<span class="chip"><b>${a.label}</b><span class="x" data-i="${i}">✕</span></span>`).join('');
@@ -997,8 +1005,28 @@ function syncSlider(){const n=Qall.length;const w=document.getElementById('slide
 function onSlide(){let a=+document.getElementById('r0').value,b=+document.getElementById('r1').value;
  rangeSel={a:Math.min(a,b),b:Math.max(a,b)};
  document.getElementById('rfrom').value=Qall[rangeSel.a];document.getElementById('rto').value=Qall[rangeSel.b];draw();}
+function renderLblOverlay(series,show){
+  let box=document.getElementById('lbl-overlay');
+  if(!show||!series||!series.length){if(box)box.style.display='none';return;}
+  if(!box){
+    box=document.createElement('div');box.id='lbl-overlay';document.body.appendChild(box);
+    box.addEventListener('mousedown',e=>{
+      const r=box.getBoundingClientRect();if(e.clientX>r.right-18&&e.clientY>r.bottom-18)return;
+      _lblDrag={sx:e.clientX,sy:e.clientY,sl:box.offsetLeft,st:box.offsetTop};e.preventDefault();});
+    window.addEventListener('mousemove',e=>{if(!_lblDrag)return;
+      box.style.left=Math.max(0,_lblDrag.sl+e.clientX-_lblDrag.sx)+'px';
+      box.style.top=Math.max(0,_lblDrag.st+e.clientY-_lblDrag.sy)+'px';});
+    window.addEventListener('mouseup',()=>{if(!_lblDrag)return;_lblDrag=null;
+      try{localStorage.setItem('ffiec_call_lblboxleft',box.offsetLeft);localStorage.setItem('ffiec_call_lblboxtop',box.offsetTop);}catch(_){};});
+    new ResizeObserver(()=>{try{localStorage.setItem('ffiec_call_lblboxw',Math.round(box.offsetWidth));localStorage.setItem('ffiec_call_lblboxh',Math.round(box.offsetHeight));}catch(_){}}).observe(box);
+    const l=window._lblBoxLeft,t=window._lblBoxTop,w=window._lblBoxW,h=window._lblBoxH;
+    if(l&&l>0&&t&&t>0){box.style.left=l+'px';box.style.top=t+'px';}else{box.style.left=Math.max(0,window.innerWidth-220)+'px';box.style.top='80px';}
+    if(w>60)box.style.width=w+'px';if(h>30)box.style.height=h+'px';}
+  box.innerHTML='<div style="font-size:11px;font-weight:600;color:var(--muted,#9aa3b2);margin-bottom:4px;padding-bottom:3px;border-bottom:1px solid var(--border,#cdd5e0);white-space:nowrap">⌯ Series labels — drag · resize corner</div>'+
+    series.map(s=>`<div style="display:flex;align-items:center;gap:6px;padding:2px 0"><span style="flex-shrink:0;width:10px;height:10px;border-radius:50%;background:${s.color}"></span><span style="font-size:12px;color:${s.color};font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:180px" title="${_esc(s.label)}">${_esc(s.label)}</span></div>`).join('');
+  box.style.display='block';}
 function draw(){const host=document.getElementById('panes');
- if(!lastSeries.length){host.innerHTML='<p class="muted">Pick an entity, then click a line item on the left.</p>';document.getElementById('cards').innerHTML='';document.getElementById('tbl').innerHTML='';return;}
+ if(!lastSeries.length){host.innerHTML='<p class="muted">Pick an entity, then click a line item on the left.</p>';document.getElementById('cards').innerHTML='';document.getElementById('tbl').innerHTML='';renderLblOverlay([],false);return;}
  const win=Qall.slice(rangeSel.a,rangeSel.b+1),ws=new Set(win);
  const normOn=document.getElementById('normbyassets')&&document.getElementById('normbyassets').checked;
  const workSeries=normOn?lastSeries.map(s=>{if(s.pct)return s;const am=_assetRows.get(s.eid)||{};const norm=s.rows.map(([q,v])=>{const a=am[q];return [q,v!=null&&a&&a!==0?100*v/a:null];});return {...s,rows:norm,pct:true,label:s.label+' / assets %'};}).map(s=>({...s})):lastSeries;
@@ -1019,6 +1047,7 @@ function draw(){const host=document.getElementById('panes');
  if(document.getElementById('qoqdelta')&&document.getElementById('qoqdelta').checked){const dol=lastSeries.filter(s=>!s.pct);
    if(dol.length){const w=dol.map(s=>{const rw=s.rows.filter(r=>ws.has(r[0]));const qm=Object.fromEntries(s.rows.map(r=>[r[0],r[1]]));const dd=rw.map((r,i)=>{const pQ=prevQtr(r[0]);const pv=pQ in qm?qm[pQ]:null;return [r[0],r[1]!=null&&pv!=null?r[1]-pv:null];}).filter(r=>r[1]!=null);return {...s,rows:dd,pct:false};});html+=pane(w,false,'$ thousands',win);}}
  host.innerHTML=html;
+ renderLblOverlay(lastSeries,window._inlineLbls!==false);
  if(window._pinnedQ){document.querySelectorAll(`#panes .qband[data-q="${window._pinnedQ}"]`).forEach(g=>g.classList.add('qband-pinned'));}
  if(lastSeries.length>0&&!lastSeries.some(s=>s.rows.some(r=>ws.has(r[0])))){host.innerHTML+=`<div style="text-align:center;padding:16px 8px 4px;font-size:14px;color:var(--muted,#9aa3b2)">No data available in the selected date range — try expanding the range or selecting <b>All</b>.</div>`;}
  const atb=document.getElementById('axistoggle');if(atb)atb.onclick=()=>{window._dualAxis=!window._dualAxis;draw();};
@@ -1104,9 +1133,8 @@ function pane(series,pct,unit,win){const W=1080,H=300,pad=64,n=win.length;
    bands+=`<g class="qband" data-q="${Q.q}"><rect class="hit" x="${left.toFixed(1)}" y="0" width="${(right-left).toFixed(1)}" height="${H}"></rect>${mk}</g>`;});
  const want=Math.min(8,n),ix=[...new Set(Array.from({length:want},(_,k)=>Math.round(k*(n-1)/Math.max(1,want-1))))];
  const lb=ix.map(i=>{const a=i===0?'start':(i===n-1?'end':'middle');return `<text x="${X(i)}" y="${H-pad+18}" font-size="10" fill="${aC}" text-anchor="${a}">${win[i]}</text>`;}).join('');
- _el.sort((a,b)=>a.y-b.y);for(let _i=1;_i<_el.length;_i++){if(_el[_i].y<_el[_i-1].y+13)_el[_i].y=_el[_i-1].y+13;}const _ov=_el.length?Math.max(0,_el[_el.length-1].y-(H-4)):0;slbls=_el.map(e=>`<text x="${e.x.toFixed(1)}" y="${(e.y-_ov).toFixed(1)}" font-size="11" fill="${e.color}" font-weight="600">${e.sl}</text>`).join('');
- let _lblEnd=W+96;for(const e of _el){_lblEnd=Math.max(_lblEnd,e.x+Math.ceil((e.sl||'').length*11*0.62)+10);}
- const _vbw=Math.min(W+340,Math.max(W+96,_lblEnd));
+ slbls=''; // labels moved to #lbl-overlay overlay
+ const _vbw=W+16;
  return `<svg viewBox="0 0 ${_vbw} ${H}" width="100%" data-pl="${pad}" data-pw="${W-2*pad}" xmlns="http://www.w3.org/2000/svg">${tk}${areas}${paths}${pts}${slbls}${lb}<text x="14" y="18" font-size="13" fill="${tC}">${unit==='$ thousands'?'$':unit}</text>${bands}</svg>`;}
 function exportSeries(){if(!window._exp){showToast('Nothing to export.');return;}dl2(window._exp.head,window._exp.body,'series');}
 function exportChartSVG(){const svgs=[...document.querySelectorAll('#panes svg')];if(!svgs.length){showToast('No chart to export.');return;}let y=0;const bg=DK()?'#0f1825':'#fff';const gs=svgs.map(s=>{const vb=(s.getAttribute('viewBox')||'0 0 1080 300').split(' ').map(Number);const H=vb[3]||300;const g=`<g transform="translate(0,${y})">${s.innerHTML}</g>`;y+=H+8;return g;});const total=Math.max(y-8,1);const svg=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 ${total}" width="1080" height="${total}"><rect width="1080" height="${total}" fill="${bg}"/>${gs.join('')}</svg>`;const a=document.createElement('a');a.href='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg);a.download='chart.svg';a.click();}
@@ -1135,9 +1163,8 @@ function paneDual(dol,pct,win){const W=1080,H=300,pad=64,padR=80,n=win.length;co
  render(dol,Y0,f0);render(pct,Y1,f1);
  const want=Math.min(8,n),ix=[...new Set(Array.from({length:want},(_,k)=>Math.round(k*(n-1)/Math.max(1,want-1))))];
  const lb=ix.map(i=>`<text x="${X(i)}" y="${H-pad+18}" font-size="10" fill="${aC}" text-anchor="${i===0?'start':(i===n-1?'end':'middle')}">${win[i]}</text>`).join('');
- _el.sort((a,b)=>a.y-b.y);for(let _i=1;_i<_el.length;_i++){if(_el[_i].y<_el[_i-1].y+13)_el[_i].y=_el[_i-1].y+13;}const _ov=_el.length?Math.max(0,_el[_el.length-1].y-(H-4)):0;slbls=_el.map(e=>`<text x="${e.x.toFixed(1)}" y="${(e.y-_ov).toFixed(1)}" font-size="11" fill="${e.color}" font-weight="600">${e.sl}</text>`).join('');
- let _lblEnd=W+96;for(const e of _el){_lblEnd=Math.max(_lblEnd,e.x+Math.ceil((e.sl||'').length*11*0.62)+10);}
- const _vbw=Math.min(W+340,Math.max(W+96,_lblEnd));
+ slbls=''; // labels moved to #lbl-overlay overlay
+ const _vbw=W+16;
  // Hover crosshair bands — parity with pane() so dual-axis gets the identical tracking line + markers.
  const _bi=Object.keys(byQ).map(Number).sort((a,b)=>a-b);let bands='';
  _bi.forEach((qi,k)=>{const Q=byQ[qi],xc=Q.x;
