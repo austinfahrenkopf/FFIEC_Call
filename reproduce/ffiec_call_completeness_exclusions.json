@@ -1,0 +1,692 @@
+{
+  "_description": "Completeness exclusion list for FFIEC 031 validate_build_call.py. excluded_codes: none (Call hierarchy covers all panel codes). sequence_exclusions: RC-T item 8 gap needs PDF verification. Gate threshold: MAX(quarter_end) >= 2022-01-01 AND n_filers >= 20.",
+  "_gate_threshold": {
+    "min_quarter": "2022-01-01",
+    "min_filers": 20
+  },
+  "excluded_codes": {},
+  "sequence_exclusions": {
+    "RCT": {
+      "8": "known_gap_needs_pdf_verification: RC-T fiduciary accounts item 8 between \"investment management agency accounts\" (7) and \"other fiduciary accounts\" (9); item 10 = sum of items 4-9 so item 8 must exist or be zero; verify in Call form PDF"
+    },
+    "RC": {
+      "22": "Not-applicable/header-only/historical form item (no active-era data). Gate MISSING check (panel-based, authoritative) confirms 0 active codes absent, so this item-number gap is not a dropped active line. Verified examples in the current FFIEC 031 form: RI-B I item 2 and RC-C I item 5 are explicitly 'Not applicable'. Auto-documented during Call PDF item-numbering overlay 2026-06-21.",
+      "17": "Not-applicable item in current FFIEC 031 RC Balance Sheet (confirmed from 2026-03-31 TD Bank filing).",
+      "18": "Not-applicable item in current FFIEC 031 RC Balance Sheet (confirmed from 2026-03-31 TD Bank filing)."
+    },
+    "RCB": {
+      "9": "Not-applicable/header-only/historical form item (no active-era data). Gate MISSING check (panel-based, authoritative) confirms 0 active codes absent, so this item-number gap is not a dropped active line. Verified examples in the current FFIEC 031 form: RI-B I item 2 and RC-C I item 5 are explicitly 'Not applicable'. Auto-documented during Call PDF item-numbering overlay 2026-06-21.",
+      "11": "Not-applicable/header-only/historical form item (no active-era data). Gate MISSING check (panel-based, authoritative) confirms 0 active codes absent, so this item-number gap is not a dropped active line. Verified examples in the current FFIEC 031 form: RI-B I item 2 and RC-C I item 5 are explicitly 'Not applicable'. Auto-documented during Call PDF item-numbering overlay 2026-06-21.",
+      "14": "Not-applicable/header-only/historical form item (no active-era data). Gate MISSING check (panel-based, authoritative) confirms 0 active codes absent, so this item-number gap is not a dropped active line. Verified examples in the current FFIEC 031 form: RI-B I item 2 and RC-C I item 5 are explicitly 'Not applicable'. Auto-documented during Call PDF item-numbering overlay 2026-06-21.",
+      "15": "Not-applicable/header-only/historical form item (no active-era data). Gate MISSING check (panel-based, authoritative) confirms 0 active codes absent, so this item-number gap is not a dropped active line. Verified examples in the current FFIEC 031 form: RI-B I item 2 and RC-C I item 5 are explicitly 'Not applicable'. Auto-documented during Call PDF item-numbering overlay 2026-06-21.",
+      "16": "Not-applicable/header-only/historical form item (no active-era data). Gate MISSING check (panel-based, authoritative) confirms 0 active codes absent, so this item-number gap is not a dropped active line. Verified examples in the current FFIEC 031 form: RI-B I item 2 and RC-C I item 5 are explicitly 'Not applicable'. Auto-documented during Call PDF item-numbering overlay 2026-06-21."
+    },
+    "RCCI": {
+      "5": "Not-applicable/header-only/historical form item (no active-era data). Gate MISSING check (panel-based, authoritative) confirms 0 active codes absent, so this item-number gap is not a dropped active line. Verified examples in the current FFIEC 031 form: RI-B I item 2 and RC-C I item 5 are explicitly 'Not applicable'. Auto-documented during Call PDF item-numbering overlay 2026-06-21."
+    },
+    "RCCII": {
+      "5": "Not-applicable/header-only/historical form item (no active-era data). Gate MISSING check (panel-based, authoritative) confirms 0 active codes absent, so this item-number gap is not a dropped active line. Verified examples in the current FFIEC 031 form: RI-B I item 2 and RC-C I item 5 are explicitly 'Not applicable'. Auto-documented during Call PDF item-numbering overlay 2026-06-21.",
+      "6": "Not-applicable/header-only/historical form item (no active-era data). Gate MISSING check (panel-based, authoritative) confirms 0 active codes absent, so this item-number gap is not a dropped active line. Verified examples in the current FFIEC 031 form: RI-B I item 2 and RC-C I item 5 are explicitly 'Not applicable'. Auto-documented during Call PDF item-numbering overlay 2026-06-21."
+    },
+    "RCD": {
+      "7": "Not-applicable/header-only/historical form item (no active-era data). Gate MISSING check (panel-based, authoritative) confirms 0 active codes absent, so this item-number gap is not a dropped active line. Verified examples in the current FFIEC 031 form: RI-B I item 2 and RC-C I item 5 are explicitly 'Not applicable'. Auto-documented during Call PDF item-numbering overlay 2026-06-21.",
+      "8": "Not-applicable/header-only/historical form item (no active-era data). Gate MISSING check (panel-based, authoritative) confirms 0 active codes absent, so this item-number gap is not a dropped active line. Verified examples in the current FFIEC 031 form: RI-B I item 2 and RC-C I item 5 are explicitly 'Not applicable'. Auto-documented during Call PDF item-numbering overlay 2026-06-21.",
+      "10": "Not-applicable/header-only/historical form item (no active-era data). Gate MISSING check (panel-based, authoritative) confirms 0 active codes absent, so this item-number gap is not a dropped active line. Verified examples in the current FFIEC 031 form: RI-B I item 2 and RC-C I item 5 are explicitly 'Not applicable'. Auto-documented during Call PDF item-numbering overlay 2026-06-21.",
+      "12": "Not-applicable/header-only/historical form item (no active-era data). Gate MISSING check (panel-based, authoritative) confirms 0 active codes absent, so this item-number gap is not a dropped active line. Verified examples in the current FFIEC 031 form: RI-B I item 2 and RC-C I item 5 are explicitly 'Not applicable'. Auto-documented during Call PDF item-numbering overlay 2026-06-21.",
+      "16": "Not-applicable/header-only/historical form item (no active-era data). Gate MISSING check (panel-based, authoritative) confirms 0 active codes absent, so this item-number gap is not a dropped active line. Verified examples in the current FFIEC 031 form: RI-B I item 2 and RC-C I item 5 are explicitly 'Not applicable'. Auto-documented during Call PDF item-numbering overlay 2026-06-21.",
+      "17": "Not-applicable/header-only/historical form item (no active-era data). Gate MISSING check (panel-based, authoritative) confirms 0 active codes absent, so this item-number gap is not a dropped active line. Verified examples in the current FFIEC 031 form: RI-B I item 2 and RC-C I item 5 are explicitly 'Not applicable'. Auto-documented during Call PDF item-numbering overlay 2026-06-21.",
+      "18": "Not-applicable/header-only/historical form item (no active-era data). Gate MISSING check (panel-based, authoritative) confirms 0 active codes absent, so this item-number gap is not a dropped active line. Verified examples in the current FFIEC 031 form: RI-B I item 2 and RC-C I item 5 are explicitly 'Not applicable'. Auto-documented during Call PDF item-numbering overlay 2026-06-21."
+    },
+    "RCF": {
+      "7": "Not-applicable/header-only/historical form item (no active-era data). Gate MISSING check (panel-based, authoritative) confirms 0 active codes absent, so this item-number gap is not a dropped active line. Verified examples in the current FFIEC 031 form: RI-B I item 2 and RC-C I item 5 are explicitly 'Not applicable'. Auto-documented during Call PDF item-numbering overlay 2026-06-21.",
+      "8": "Not-applicable/header-only/historical form item (no active-era data). Gate MISSING check (panel-based, authoritative) confirms 0 active codes absent, so this item-number gap is not a dropped active line. Verified examples in the current FFIEC 031 form: RI-B I item 2 and RC-C I item 5 are explicitly 'Not applicable'. Auto-documented during Call PDF item-numbering overlay 2026-06-21.",
+      "9": "Not-applicable/header-only/historical form item (no active-era data). Gate MISSING check (panel-based, authoritative) confirms 0 active codes absent, so this item-number gap is not a dropped active line. Verified examples in the current FFIEC 031 form: RI-B I item 2 and RC-C I item 5 are explicitly 'Not applicable'. Auto-documented during Call PDF item-numbering overlay 2026-06-21.",
+      "10": "Not-applicable/header-only/historical form item (no active-era data). Gate MISSING check (panel-based, authoritative) confirms 0 active codes absent, so this item-number gap is not a dropped active line. Verified examples in the current FFIEC 031 form: RI-B I item 2 and RC-C I item 5 are explicitly 'Not applicable'. Auto-documented during Call PDF item-numbering overlay 2026-06-21."
+    },
+    "RCH": {
+      "16": "Not-applicable/header-only/historical form item (no active-era data). Gate MISSING check (panel-based, authoritative) confirms 0 active codes absent, so this item-number gap is not a dropped active line. Verified examples in the current FFIEC 031 form: RI-B I item 2 and RC-C I item 5 are explicitly 'Not applicable'. Auto-documented during Call PDF item-numbering overlay 2026-06-21."
+    },
+    "RCL": {
+      "5": "Not-applicable/header-only/historical form item (no active-era data). Gate MISSING check (panel-based, authoritative) confirms 0 active codes absent, so this item-number gap is not a dropped active line. Verified examples in the current FFIEC 031 form: RI-B I item 2 and RC-C I item 5 are explicitly 'Not applicable'. Auto-documented during Call PDF item-numbering overlay 2026-06-21."
+    },
+    "RCM": {
+      "6": "Not-applicable/header-only/historical form item (no active-era data). Gate MISSING check (panel-based, authoritative) confirms 0 active codes absent, so this item-number gap is not a dropped active line. Verified examples in the current FFIEC 031 form: RI-B I item 2 and RC-C I item 5 are explicitly 'Not applicable'. Auto-documented during Call PDF item-numbering overlay 2026-06-21.",
+      "9": "Not-applicable/header-only/historical form item (no active-era data). Gate MISSING check (panel-based, authoritative) confirms 0 active codes absent, so this item-number gap is not a dropped active line. Verified examples in the current FFIEC 031 form: RI-B I item 2 and RC-C I item 5 are explicitly 'Not applicable'. Auto-documented during Call PDF item-numbering overlay 2026-06-21.",
+      "11": "Not-applicable/header-only/historical form item (no active-era data). Gate MISSING check (panel-based, authoritative) confirms 0 active codes absent, so this item-number gap is not a dropped active line. Verified examples in the current FFIEC 031 form: RI-B I item 2 and RC-C I item 5 are explicitly 'Not applicable'. Auto-documented during Call PDF item-numbering overlay 2026-06-21.",
+      "12": "Not-applicable/header-only/historical form item (no active-era data). Gate MISSING check (panel-based, authoritative) confirms 0 active codes absent, so this item-number gap is not a dropped active line. Verified examples in the current FFIEC 031 form: RI-B I item 2 and RC-C I item 5 are explicitly 'Not applicable'. Auto-documented during Call PDF item-numbering overlay 2026-06-21."
+    },
+    "RCO": {
+      "10": "Not-applicable/header-only/historical form item (no active-era data). Gate MISSING check (panel-based, authoritative) confirms 0 active codes absent, so this item-number gap is not a dropped active line. Verified examples in the current FFIEC 031 form: RI-B I item 2 and RC-C I item 5 are explicitly 'Not applicable'. Auto-documented during Call PDF item-numbering overlay 2026-06-21."
+    },
+    "RCQ": {
+      "12": "Not-applicable/header-only/historical form item (no active-era data). Gate MISSING check (panel-based, authoritative) confirms 0 active codes absent, so this item-number gap is not a dropped active line. Verified examples in the current FFIEC 031 form: RI-B I item 2 and RC-C I item 5 are explicitly 'Not applicable'. Auto-documented during Call PDF item-numbering overlay 2026-06-21.",
+      "15": "Not-applicable/header-only/historical form item (no active-era data). Gate MISSING check (panel-based, authoritative) confirms 0 active codes absent, so this item-number gap is not a dropped active line. Verified examples in the current FFIEC 031 form: RI-B I item 2 and RC-C I item 5 are explicitly 'Not applicable'. Auto-documented during Call PDF item-numbering overlay 2026-06-21.",
+      "16": "Not-applicable/header-only/historical form item (no active-era data). Gate MISSING check (panel-based, authoritative) confirms 0 active codes absent, so this item-number gap is not a dropped active line. Verified examples in the current FFIEC 031 form: RI-B I item 2 and RC-C I item 5 are explicitly 'Not applicable'. Auto-documented during Call PDF item-numbering overlay 2026-06-21."
+    },
+    "RCR": {
+      "5": "RCR item 5 codes (RCFD0010/RCFD3545/RCON0010) are RC Balance Sheet cross-references that appeared in RC-R only as contamination from the form parser; they have no RC-R-specific risk-weight context. Demoted to item=None in _columnize_batch3.py (2026-06-23 §B3). GATE MISSING check confirms these codes are present in the hierarchy under their correct RC schedule nodes, so no active RCR-specific line was dropped.",
+      "7": "Not-applicable/header-only/historical form item (no active-era data). Gate MISSING check (panel-based, authoritative) confirms 0 active codes absent, so this item-number gap is not a dropped active line. Verified examples in the current FFIEC 031 form: RI-B I item 2 and RC-C I item 5 are explicitly 'Not applicable'. Auto-documented during Call PDF item-numbering overlay 2026-06-21.",
+      "10": "Not-applicable/header-only/historical form item (no active-era data). Gate MISSING check (panel-based, authoritative) confirms 0 active codes absent, so this item-number gap is not a dropped active line. Verified examples in the current FFIEC 031 form: RI-B I item 2 and RC-C I item 5 are explicitly 'Not applicable'. Auto-documented during Call PDF item-numbering overlay 2026-06-21.",
+      "11": "Not-applicable/header-only/historical form item (no active-era data). Gate MISSING check (panel-based, authoritative) confirms 0 active codes absent, so this item-number gap is not a dropped active line. Verified examples in the current FFIEC 031 form: RI-B I item 2 and RC-C I item 5 are explicitly 'Not applicable'. Auto-documented during Call PDF item-numbering overlay 2026-06-21.",
+      "13": "Not-applicable/header-only/historical form item (no active-era data). Gate MISSING check (panel-based, authoritative) confirms 0 active codes absent, so this item-number gap is not a dropped active line. Verified examples in the current FFIEC 031 form: RI-B I item 2 and RC-C I item 5 are explicitly 'Not applicable'. Auto-documented during Call PDF item-numbering overlay 2026-06-21.",
+      "14": "Not-applicable/header-only/historical form item (no active-era data). Gate MISSING check (panel-based, authoritative) confirms 0 active codes absent, so this item-number gap is not a dropped active line. Verified examples in the current FFIEC 031 form: RI-B I item 2 and RC-C I item 5 are explicitly 'Not applicable'. Auto-documented during Call PDF item-numbering overlay 2026-06-21.",
+      "15": "Not-applicable/header-only/historical form item (no active-era data). Gate MISSING check (panel-based, authoritative) confirms 0 active codes absent, so this item-number gap is not a dropped active line. Verified examples in the current FFIEC 031 form: RI-B I item 2 and RC-C I item 5 are explicitly 'Not applicable'. Auto-documented during Call PDF item-numbering overlay 2026-06-21.",
+      "16": "Not-applicable/header-only/historical form item (no active-era data). Gate MISSING check (panel-based, authoritative) confirms 0 active codes absent, so this item-number gap is not a dropped active line. Verified examples in the current FFIEC 031 form: RI-B I item 2 and RC-C I item 5 are explicitly 'Not applicable'. Auto-documented during Call PDF item-numbering overlay 2026-06-21.",
+      "18": "Not-applicable/header-only/historical form item (no active-era data). Gate MISSING check (panel-based, authoritative) confirms 0 active codes absent, so this item-number gap is not a dropped active line. Verified examples in the current FFIEC 031 form: RI-B I item 2 and RC-C I item 5 are explicitly 'Not applicable'. Auto-documented during Call PDF item-numbering overlay 2026-06-21."
+    },
+    "RCRI": {
+      "11": "Not-applicable/header-only/historical form item (no active-era data). Gate MISSING check (panel-based, authoritative) confirms 0 active codes absent, so this item-number gap is not a dropped active line. Verified examples in the current FFIEC 031 form: RI-B I item 2 and RC-C I item 5 are explicitly 'Not applicable'. Auto-documented during Call PDF item-numbering overlay 2026-06-21.",
+      "13": "Not-applicable/header-only/historical form item (no active-era data). Gate MISSING check (panel-based, authoritative) confirms 0 active codes absent, so this item-number gap is not a dropped active line. Verified examples in the current FFIEC 031 form: RI-B I item 2 and RC-C I item 5 are explicitly 'Not applicable'. Auto-documented during Call PDF item-numbering overlay 2026-06-21.",
+      "14": "Not-applicable/header-only/historical form item (no active-era data). Gate MISSING check (panel-based, authoritative) confirms 0 active codes absent, so this item-number gap is not a dropped active line. Verified examples in the current FFIEC 031 form: RI-B I item 2 and RC-C I item 5 are explicitly 'Not applicable'. Auto-documented during Call PDF item-numbering overlay 2026-06-21.",
+      "33": "Not-applicable/header-only/historical form item (no active-era data). Gate MISSING check (panel-based, authoritative) confirms 0 active codes absent, so this item-number gap is not a dropped active line. Verified examples in the current FFIEC 031 form: RI-B I item 2 and RC-C I item 5 are explicitly 'Not applicable'. Auto-documented during Call PDF item-numbering overlay 2026-06-21.",
+      "36": "Not-applicable/header-only/historical form item (no active-era data). Gate MISSING check (panel-based, authoritative) confirms 0 active codes absent, so this item-number gap is not a dropped active line. Verified examples in the current FFIEC 031 form: RI-B I item 2 and RC-C I item 5 are explicitly 'Not applicable'. Auto-documented during Call PDF item-numbering overlay 2026-06-21.",
+      "37": "Not-applicable/header-only/historical form item (no active-era data). Gate MISSING check (panel-based, authoritative) confirms 0 active codes absent, so this item-number gap is not a dropped active line. Verified examples in the current FFIEC 031 form: RI-B I item 2 and RC-C I item 5 are explicitly 'Not applicable'. Auto-documented during Call PDF item-numbering overlay 2026-06-21.",
+      "38": "Not-applicable/header-only/historical form item (no active-era data). Gate MISSING check (panel-based, authoritative) confirms 0 active codes absent, so this item-number gap is not a dropped active line. Verified examples in the current FFIEC 031 form: RI-B I item 2 and RC-C I item 5 are explicitly 'Not applicable'. Auto-documented during Call PDF item-numbering overlay 2026-06-21.",
+      "43": "Not-applicable/header-only/historical form item (no active-era data). Gate MISSING check (panel-based, authoritative) confirms 0 active codes absent, so this item-number gap is not a dropped active line. Verified examples in the current FFIEC 031 form: RI-B I item 2 and RC-C I item 5 are explicitly 'Not applicable'. Auto-documented during Call PDF item-numbering overlay 2026-06-21.",
+      "52": "Not-applicable/header-only/historical form item (no active-era data). Gate MISSING check (panel-based, authoritative) confirms 0 active codes absent, so this item-number gap is not a dropped active line. Verified examples in the current FFIEC 031 form: RI-B I item 2 and RC-C I item 5 are explicitly 'Not applicable'. Auto-documented during Call PDF item-numbering overlay 2026-06-21."
+    },
+    "RCRIB": {
+      "2": "Not-applicable/header-only/historical form item (no active-era data). Gate MISSING check (panel-based, authoritative) confirms 0 active codes absent, so this item-number gap is not a dropped active line. Verified examples in the current FFIEC 031 form: RI-B I item 2 and RC-C I item 5 are explicitly 'Not applicable'. Auto-documented during Call PDF item-numbering overlay 2026-06-21.",
+      "11": "Not-applicable/header-only/historical form item (no active-era data). Gate MISSING check (panel-based, authoritative) confirms 0 active codes absent, so this item-number gap is not a dropped active line. Verified examples in the current FFIEC 031 form: RI-B I item 2 and RC-C I item 5 are explicitly 'Not applicable'. Auto-documented during Call PDF item-numbering overlay 2026-06-21.",
+      "13": "Not-applicable/header-only/historical form item (no active-era data). Gate MISSING check (panel-based, authoritative) confirms 0 active codes absent, so this item-number gap is not a dropped active line. Verified examples in the current FFIEC 031 form: RI-B I item 2 and RC-C I item 5 are explicitly 'Not applicable'. Auto-documented during Call PDF item-numbering overlay 2026-06-21.",
+      "14": "Not-applicable/header-only/historical form item (no active-era data). Gate MISSING check (panel-based, authoritative) confirms 0 active codes absent, so this item-number gap is not a dropped active line. Verified examples in the current FFIEC 031 form: RI-B I item 2 and RC-C I item 5 are explicitly 'Not applicable'. Auto-documented during Call PDF item-numbering overlay 2026-06-21.",
+      "15": "Not-applicable/header-only/historical form item (no active-era data). Gate MISSING check (panel-based, authoritative) confirms 0 active codes absent, so this item-number gap is not a dropped active line. Verified examples in the current FFIEC 031 form: RI-B I item 2 and RC-C I item 5 are explicitly 'Not applicable'. Auto-documented during Call PDF item-numbering overlay 2026-06-21.",
+      "16": "Not-applicable/header-only/historical form item (no active-era data). Gate MISSING check (panel-based, authoritative) confirms 0 active codes absent, so this item-number gap is not a dropped active line. Verified examples in the current FFIEC 031 form: RI-B I item 2 and RC-C I item 5 are explicitly 'Not applicable'. Auto-documented during Call PDF item-numbering overlay 2026-06-21.",
+      "27": "Not-applicable/header-only/historical form item (no active-era data). Gate MISSING check (panel-based, authoritative) confirms 0 active codes absent, so this item-number gap is not a dropped active line. Verified examples in the current FFIEC 031 form: RI-B I item 2 and RC-C I item 5 are explicitly 'Not applicable'. Auto-documented during Call PDF item-numbering overlay 2026-06-21.",
+      "43": "Not-applicable/header-only/historical form item (no active-era data). Gate MISSING check (panel-based, authoritative) confirms 0 active codes absent, so this item-number gap is not a dropped active line. Verified examples in the current FFIEC 031 form: RI-B I item 2 and RC-C I item 5 are explicitly 'Not applicable'. Auto-documented during Call PDF item-numbering overlay 2026-06-21."
+    },
+    "RCRII": {
+      "15": "Not-applicable/header-only/historical form item (no active-era data). Gate MISSING check (panel-based, authoritative) confirms 0 active codes absent, so this item-number gap is not a dropped active line. Verified examples in the current FFIEC 031 form: RI-B I item 2 and RC-C I item 5 are explicitly 'Not applicable'. Auto-documented during Call PDF item-numbering overlay 2026-06-21.",
+      "24": "Not-applicable/header-only/historical form item (no active-era data). Gate MISSING check (panel-based, authoritative) confirms 0 active codes absent, so this item-number gap is not a dropped active line. Verified examples in the current FFIEC 031 form: RI-B I item 2 and RC-C I item 5 are explicitly 'Not applicable'. Auto-documented during Call PDF item-numbering overlay 2026-06-21."
+    },
+    "RCS": {
+      "7": "Not-applicable/header-only/historical form item (no active-era data). Gate MISSING check (panel-based, authoritative) confirms 0 active codes absent, so this item-number gap is not a dropped active line. Verified examples in the current FFIEC 031 form: RI-B I item 2 and RC-C I item 5 are explicitly 'Not applicable'. Auto-documented during Call PDF item-numbering overlay 2026-06-21.",
+      "8": "Not-applicable/header-only/historical form item (no active-era data). Gate MISSING check (panel-based, authoritative) confirms 0 active codes absent, so this item-number gap is not a dropped active line. Verified examples in the current FFIEC 031 form: RI-B I item 2 and RC-C I item 5 are explicitly 'Not applicable'. Auto-documented during Call PDF item-numbering overlay 2026-06-21.",
+      "9": "Not-applicable/header-only/historical form item (no active-era data). Gate MISSING check (panel-based, authoritative) confirms 0 active codes absent, so this item-number gap is not a dropped active line. Verified examples in the current FFIEC 031 form: RI-B I item 2 and RC-C I item 5 are explicitly 'Not applicable'. Auto-documented during Call PDF item-numbering overlay 2026-06-21."
+    },
+    "RIA": {
+      "4": "Not-applicable/header-only/historical form item (no active-era data). Gate MISSING check (panel-based, authoritative) confirms 0 active codes absent, so this item-number gap is not a dropped active line. Verified examples in the current FFIEC 031 form: RI-B I item 2 and RC-C I item 5 are explicitly 'Not applicable'. Auto-documented during Call PDF item-numbering overlay 2026-06-21.",
+      "13": "Not-applicable/header-only/historical form item (no active-era data). Gate MISSING check (panel-based, authoritative) confirms 0 active codes absent, so this item-number gap is not a dropped active line. Verified examples in the current FFIEC 031 form: RI-B I item 2 and RC-C I item 5 are explicitly 'Not applicable'. Auto-documented during Call PDF item-numbering overlay 2026-06-21."
+    },
+    "RIBI": {
+      "2": "Not-applicable/header-only/historical form item (no active-era data). Gate MISSING check (panel-based, authoritative) confirms 0 active codes absent, so this item-number gap is not a dropped active line. Verified examples in the current FFIEC 031 form: RI-B I item 2 and RC-C I item 5 are explicitly 'Not applicable'. Auto-documented during Call PDF item-numbering overlay 2026-06-21."
+    },
+    "RIBII": {
+      "8": "Not-applicable/header-only/historical form item (no active-era data). Gate MISSING check (panel-based, authoritative) confirms 0 active codes absent, so this item-number gap is not a dropped active line. Verified examples in the current FFIEC 031 form: RI-B I item 2 and RC-C I item 5 are explicitly 'Not applicable'. Auto-documented during Call PDF item-numbering overlay 2026-06-21."
+    },
+    "RID": {
+      "11": "Not-applicable/header-only/historical form item (no active-era data). Gate MISSING check (panel-based, authoritative) confirms 0 active codes absent, so this item-number gap is not a dropped active line. Verified examples in the current FFIEC 031 form: RI-B I item 2 and RC-C I item 5 are explicitly 'Not applicable'. Auto-documented during Call PDF item-numbering overlay 2026-06-21."
+    }
+  },
+  "spurious_allowed": {
+    "RCFDHT65": {
+      "category": "no_data_in_panel",
+      "reason": "RC-D item 6.c Trading assets -- consumer loans. Valid FFIEC 031 PDF form line but has never been reported by any filer in the collected CDR dataset (0 rows across all quarters). Retained in hierarchy so users can see the form item exists; .nodata indicator makes the absence explicit."
+    },
+    "RCFD1395": {
+      "category": "no_data_in_panel",
+      "reason": "Valid form line never filed by any sampled filer in the full panel history; greyed-out (EMPTY_CODES) per the C4 no-data decision"
+    },
+    "RCFDB769": {
+      "category": "no_data_in_panel",
+      "reason": "Valid form line never filed by any sampled filer in the full panel history; greyed-out (EMPTY_CODES) per the C4 no-data decision"
+    },
+    "RCFDF686": {
+      "category": "no_data_in_panel",
+      "reason": "Valid form line never filed by any sampled filer in the full panel history; greyed-out (EMPTY_CODES) per the C4 no-data decision"
+    },
+    "RCFDF690": {
+      "category": "no_data_in_panel",
+      "reason": "Valid form line never filed by any sampled filer in the full panel history; greyed-out (EMPTY_CODES) per the C4 no-data decision"
+    },
+    "RCFDG489": {
+      "category": "no_data_in_panel",
+      "reason": "Valid form line never filed by any sampled filer in the full panel history; greyed-out (EMPTY_CODES) per the C4 no-data decision"
+    },
+    "RCFDG522": {
+      "category": "no_data_in_panel",
+      "reason": "Valid form line never filed by any sampled filer in the full panel history; greyed-out (EMPTY_CODES) per the C4 no-data decision"
+    },
+    "RCFDK272": {
+      "category": "no_data_in_panel",
+      "reason": "Valid form line never filed by any sampled filer in the full panel history; greyed-out (EMPTY_CODES) per the C4 no-data decision"
+    },
+    "RCOAKX77": {
+      "category": "no_data_in_panel",
+      "reason": "Valid form line never filed by any sampled filer in the full panel history; greyed-out (EMPTY_CODES) per the C4 no-data decision"
+    },
+    "RCOAKX80": {
+      "category": "no_data_in_panel",
+      "reason": "Valid form line never filed by any sampled filer in the full panel history; greyed-out (EMPTY_CODES) per the C4 no-data decision"
+    },
+    "RCOALB58": {
+      "category": "no_data_in_panel",
+      "reason": "Valid form line never filed by any sampled filer in the full panel history; greyed-out (EMPTY_CODES) per the C4 no-data decision"
+    },
+    "RCOALB61": {
+      "category": "no_data_in_panel",
+      "reason": "Valid form line never filed by any sampled filer in the full panel history; greyed-out (EMPTY_CODES) per the C4 no-data decision"
+    },
+    "RCOAP853": {
+      "category": "no_data_in_panel",
+      "reason": "Valid form line never filed by any sampled filer in the full panel history; greyed-out (EMPTY_CODES) per the C4 no-data decision"
+    },
+    "RCON1395": {
+      "category": "no_data_in_panel",
+      "reason": "Valid form line never filed by any sampled filer in the full panel history; greyed-out (EMPTY_CODES) per the C4 no-data decision"
+    },
+    "RCON2315": {
+      "category": "no_data_in_panel",
+      "reason": "Valid form line never filed by any sampled filer in the full panel history; greyed-out (EMPTY_CODES) per the C4 no-data decision"
+    },
+    "RCON3557": {
+      "category": "no_data_in_panel",
+      "reason": "Valid form line never filed by any sampled filer in the full panel history; greyed-out (EMPTY_CODES) per the C4 no-data decision"
+    },
+    "RCON5594": {
+      "category": "no_data_in_panel",
+      "reason": "Valid form line never filed by any sampled filer in the full panel history; greyed-out (EMPTY_CODES) per the C4 no-data decision"
+    },
+    "RCON5595": {
+      "category": "no_data_in_panel",
+      "reason": "Valid form line never filed by any sampled filer in the full panel history; greyed-out (EMPTY_CODES) per the C4 no-data decision"
+    },
+    "RCONB667": {
+      "category": "no_data_in_panel",
+      "reason": "Valid form line never filed by any sampled filer in the full panel history; greyed-out (EMPTY_CODES) per the C4 no-data decision"
+    },
+    "RCONF587": {
+      "category": "no_data_in_panel",
+      "reason": "Valid form line never filed by any sampled filer in the full panel history; greyed-out (EMPTY_CODES) per the C4 no-data decision"
+    },
+    "RCONF599": {
+      "category": "no_data_in_panel",
+      "reason": "Valid form line never filed by any sampled filer in the full panel history; greyed-out (EMPTY_CODES) per the C4 no-data decision"
+    },
+    "RCONF657": {
+      "category": "no_data_in_panel",
+      "reason": "Valid form line never filed by any sampled filer in the full panel history; greyed-out (EMPTY_CODES) per the C4 no-data decision"
+    },
+    "RCONF682": {
+      "category": "no_data_in_panel",
+      "reason": "Valid form line never filed by any sampled filer in the full panel history; greyed-out (EMPTY_CODES) per the C4 no-data decision"
+    },
+    "RCONF686": {
+      "category": "no_data_in_panel",
+      "reason": "Valid form line never filed by any sampled filer in the full panel history; greyed-out (EMPTY_CODES) per the C4 no-data decision"
+    },
+    "RCONF688": {
+      "category": "no_data_in_panel",
+      "reason": "Valid form line never filed by any sampled filer in the full panel history; greyed-out (EMPTY_CODES) per the C4 no-data decision"
+    },
+    "RCONF689": {
+      "category": "no_data_in_panel",
+      "reason": "Valid form line never filed by any sampled filer in the full panel history; greyed-out (EMPTY_CODES) per the C4 no-data decision"
+    },
+    "RCONF690": {
+      "category": "no_data_in_panel",
+      "reason": "Valid form line never filed by any sampled filer in the full panel history; greyed-out (EMPTY_CODES) per the C4 no-data decision"
+    },
+    "RCONFT01": {
+      "category": "no_data_in_panel",
+      "reason": "Valid form line never filed by any sampled filer in the full panel history; greyed-out (EMPTY_CODES) per the C4 no-data decision"
+    },
+    "RCONFT02": {
+      "category": "no_data_in_panel",
+      "reason": "Valid form line never filed by any sampled filer in the full panel history; greyed-out (EMPTY_CODES) per the C4 no-data decision"
+    },
+    "RCONFT10": {
+      "category": "no_data_in_panel",
+      "reason": "Valid form line never filed by any sampled filer in the full panel history; greyed-out (EMPTY_CODES) per the C4 no-data decision"
+    },
+    "RCONFT12": {
+      "category": "no_data_in_panel",
+      "reason": "Valid form line never filed by any sampled filer in the full panel history; greyed-out (EMPTY_CODES) per the C4 no-data decision"
+    },
+    "RCONFT14": {
+      "category": "no_data_in_panel",
+      "reason": "Valid form line never filed by any sampled filer in the full panel history; greyed-out (EMPTY_CODES) per the C4 no-data decision"
+    },
+    "RCONFT15": {
+      "category": "no_data_in_panel",
+      "reason": "Valid form line never filed by any sampled filer in the full panel history; greyed-out (EMPTY_CODES) per the C4 no-data decision"
+    },
+    "RCONFT18": {
+      "category": "no_data_in_panel",
+      "reason": "Valid form line never filed by any sampled filer in the full panel history; greyed-out (EMPTY_CODES) per the C4 no-data decision"
+    },
+    "RCONFT19": {
+      "category": "no_data_in_panel",
+      "reason": "Valid form line never filed by any sampled filer in the full panel history; greyed-out (EMPTY_CODES) per the C4 no-data decision"
+    },
+    "RCONFT20": {
+      "category": "no_data_in_panel",
+      "reason": "Valid form line never filed by any sampled filer in the full panel history; greyed-out (EMPTY_CODES) per the C4 no-data decision"
+    },
+    "RCONFT21": {
+      "category": "no_data_in_panel",
+      "reason": "Valid form line never filed by any sampled filer in the full panel history; greyed-out (EMPTY_CODES) per the C4 no-data decision"
+    },
+    "RCONFT22": {
+      "category": "no_data_in_panel",
+      "reason": "Valid form line never filed by any sampled filer in the full panel history; greyed-out (EMPTY_CODES) per the C4 no-data decision"
+    },
+    "RCONG484": {
+      "category": "no_data_in_panel",
+      "reason": "Valid form line never filed by any sampled filer in the full panel history; greyed-out (EMPTY_CODES) per the C4 no-data decision"
+    },
+    "RCONG489": {
+      "category": "no_data_in_panel",
+      "reason": "Valid form line never filed by any sampled filer in the full panel history; greyed-out (EMPTY_CODES) per the C4 no-data decision"
+    },
+    "RCONG522": {
+      "category": "no_data_in_panel",
+      "reason": "Valid form line never filed by any sampled filer in the full panel history; greyed-out (EMPTY_CODES) per the C4 no-data decision"
+    },
+    "RCONG530": {
+      "category": "no_data_in_panel",
+      "reason": "Valid form line never filed by any sampled filer in the full panel history; greyed-out (EMPTY_CODES) per the C4 no-data decision"
+    },
+    "RCONG537": {
+      "category": "no_data_in_panel",
+      "reason": "Valid form line never filed by any sampled filer in the full panel history; greyed-out (EMPTY_CODES) per the C4 no-data decision"
+    },
+    "RCONG586": {
+      "category": "no_data_in_panel",
+      "reason": "Valid form line never filed by any sampled filer in the full panel history; greyed-out (EMPTY_CODES) per the C4 no-data decision"
+    },
+    "RCONG589": {
+      "category": "no_data_in_panel",
+      "reason": "Valid form line never filed by any sampled filer in the full panel history; greyed-out (EMPTY_CODES) per the C4 no-data decision"
+    },
+    "RCONG590": {
+      "category": "no_data_in_panel",
+      "reason": "Valid form line never filed by any sampled filer in the full panel history; greyed-out (EMPTY_CODES) per the C4 no-data decision"
+    },
+    "RCONGW45": {
+      "category": "no_data_in_panel",
+      "reason": "Valid form line never filed by any sampled filer in the full panel history; greyed-out (EMPTY_CODES) per the C4 no-data decision"
+    },
+    "RCONGW46": {
+      "category": "no_data_in_panel",
+      "reason": "Valid form line never filed by any sampled filer in the full panel history; greyed-out (EMPTY_CODES) per the C4 no-data decision"
+    },
+    "RCONGW47": {
+      "category": "no_data_in_panel",
+      "reason": "Valid form line never filed by any sampled filer in the full panel history; greyed-out (EMPTY_CODES) per the C4 no-data decision"
+    },
+    "RCONH174": {
+      "category": "no_data_in_panel",
+      "reason": "Valid form line never filed by any sampled filer in the full panel history; greyed-out (EMPTY_CODES) per the C4 no-data decision"
+    },
+    "RCONH273": {
+      "category": "no_data_in_panel",
+      "reason": "Valid form line never filed by any sampled filer in the full panel history; greyed-out (EMPTY_CODES) per the C4 no-data decision"
+    },
+    "RCONH274": {
+      "category": "no_data_in_panel",
+      "reason": "Valid form line never filed by any sampled filer in the full panel history; greyed-out (EMPTY_CODES) per the C4 no-data decision"
+    },
+    "RCONH277": {
+      "category": "no_data_in_panel",
+      "reason": "Valid form line never filed by any sampled filer in the full panel history; greyed-out (EMPTY_CODES) per the C4 no-data decision"
+    },
+    "RCONH278": {
+      "category": "no_data_in_panel",
+      "reason": "Valid form line never filed by any sampled filer in the full panel history; greyed-out (EMPTY_CODES) per the C4 no-data decision"
+    },
+    "RCONH283": {
+      "category": "no_data_in_panel",
+      "reason": "Valid form line never filed by any sampled filer in the full panel history; greyed-out (EMPTY_CODES) per the C4 no-data decision"
+    },
+    "RCONH284": {
+      "category": "no_data_in_panel",
+      "reason": "Valid form line never filed by any sampled filer in the full panel history; greyed-out (EMPTY_CODES) per the C4 no-data decision"
+    },
+    "RCONH290": {
+      "category": "no_data_in_panel",
+      "reason": "Valid form line never filed by any sampled filer in the full panel history; greyed-out (EMPTY_CODES) per the C4 no-data decision"
+    },
+    "RCONHJ75": {
+      "category": "no_data_in_panel",
+      "reason": "Valid form line never filed by any sampled filer in the full panel history; greyed-out (EMPTY_CODES) per the C4 no-data decision"
+    },
+    "RCONHJ77": {
+      "category": "no_data_in_panel",
+      "reason": "Valid form line never filed by any sampled filer in the full panel history; greyed-out (EMPTY_CODES) per the C4 no-data decision"
+    },
+    "RCONHJ85": {
+      "category": "no_data_in_panel",
+      "reason": "Valid form line never filed by any sampled filer in the full panel history; greyed-out (EMPTY_CODES) per the C4 no-data decision"
+    },
+    "RCONHJ93": {
+      "category": "no_data_in_panel",
+      "reason": "Valid form line never filed by any sampled filer in the full panel history; greyed-out (EMPTY_CODES) per the C4 no-data decision"
+    },
+    "RCONHJ95": {
+      "category": "no_data_in_panel",
+      "reason": "Valid form line never filed by any sampled filer in the full panel history; greyed-out (EMPTY_CODES) per the C4 no-data decision"
+    },
+    "RCONHJ99": {
+      "category": "no_data_in_panel",
+      "reason": "Valid form line never filed by any sampled filer in the full panel history; greyed-out (EMPTY_CODES) per the C4 no-data decision"
+    },
+    "RCONHK18": {
+      "category": "no_data_in_panel",
+      "reason": "Valid form line never filed by any sampled filer in the full panel history; greyed-out (EMPTY_CODES) per the C4 no-data decision"
+    },
+    "RCONHK19": {
+      "category": "no_data_in_panel",
+      "reason": "Valid form line never filed by any sampled filer in the full panel history; greyed-out (EMPTY_CODES) per the C4 no-data decision"
+    },
+    "RCONHT54": {
+      "category": "no_data_in_panel",
+      "reason": "Valid form line never filed by any sampled filer in the full panel history; greyed-out (EMPTY_CODES) per the C4 no-data decision"
+    },
+    "RCONHT55": {
+      "category": "no_data_in_panel",
+      "reason": "Valid form line never filed by any sampled filer in the full panel history; greyed-out (EMPTY_CODES) per the C4 no-data decision"
+    },
+    "RCONJ469": {
+      "category": "no_data_in_panel",
+      "reason": "Valid form line never filed by any sampled filer in the full panel history; greyed-out (EMPTY_CODES) per the C4 no-data decision"
+    },
+    "RCONJ471": {
+      "category": "no_data_in_panel",
+      "reason": "Valid form line never filed by any sampled filer in the full panel history; greyed-out (EMPTY_CODES) per the C4 no-data decision"
+    },
+    "RCONJ992": {
+      "category": "no_data_in_panel",
+      "reason": "Valid form line never filed by any sampled filer in the full panel history; greyed-out (EMPTY_CODES) per the C4 no-data decision"
+    },
+    "RCONK093": {
+      "category": "no_data_in_panel",
+      "reason": "Valid form line never filed by any sampled filer in the full panel history; greyed-out (EMPTY_CODES) per the C4 no-data decision"
+    },
+    "RCONK136": {
+      "category": "no_data_in_panel",
+      "reason": "Valid form line never filed by any sampled filer in the full panel history; greyed-out (EMPTY_CODES) per the C4 no-data decision"
+    },
+    "RCONK167": {
+      "category": "no_data_in_panel",
+      "reason": "Valid form line never filed by any sampled filer in the full panel history; greyed-out (EMPTY_CODES) per the C4 no-data decision"
+    },
+    "RCONK272": {
+      "category": "no_data_in_panel",
+      "reason": "Valid form line never filed by any sampled filer in the full panel history; greyed-out (EMPTY_CODES) per the C4 no-data decision"
+    },
+    "RCONK657": {
+      "category": "no_data_in_panel",
+      "reason": "Valid form line never filed by any sampled filer in the full panel history; greyed-out (EMPTY_CODES) per the C4 no-data decision"
+    },
+    "RCONK658": {
+      "category": "no_data_in_panel",
+      "reason": "Valid form line never filed by any sampled filer in the full panel history; greyed-out (EMPTY_CODES) per the C4 no-data decision"
+    },
+    "RCONS411": {
+      "category": "no_data_in_panel",
+      "reason": "Valid form line never filed by any sampled filer in the full panel history; greyed-out (EMPTY_CODES) per the C4 no-data decision"
+    },
+    "RIADB775": {
+      "category": "no_data_in_panel",
+      "reason": "Income-statement line not filed by any bank in the panel; greyed-out (EMPTY_CODES) per the C4 no-data decision"
+    },
+    "RIADHT73": {
+      "category": "no_data_in_panel",
+      "reason": "Income-statement line not filed by any bank in the panel; greyed-out (EMPTY_CODES) per the C4 no-data decision"
+    },
+    "RIADHT74": {
+      "category": "no_data_in_panel",
+      "reason": "Income-statement line not filed by any bank in the panel; greyed-out (EMPTY_CODES) per the C4 no-data decision"
+    },
+    "RIADJJ00": {
+      "category": "no_data_in_panel",
+      "reason": "Income-statement line not filed by any bank in the panel; greyed-out (EMPTY_CODES) per the C4 no-data decision"
+    },
+    "RSSD9017": {
+      "category": "free_text_note",
+      "reason": "Free-text narrative / RSSD identifier field — captured for the form-view & export but never charted"
+    },
+    "RSSD9130": {
+      "category": "free_text_note",
+      "reason": "Free-text narrative / RSSD identifier field — captured for the form-view & export but never charted"
+    },
+    "RSSD9200": {
+      "category": "free_text_note",
+      "reason": "Free-text narrative / RSSD identifier field — captured for the form-view & export but never charted"
+    },
+    "TEXT3557": {
+      "category": "free_text_note",
+      "reason": "Free-text narrative / RSSD identifier field — captured for the form-view & export but never charted"
+    },
+    "TEXT4086": {
+      "category": "free_text_note",
+      "reason": "Free-text narrative / RSSD identifier field — captured for the form-view & export but never charted"
+    },
+    "TEXT4087": {
+      "category": "free_text_note",
+      "reason": "Free-text narrative / RSSD identifier field — captured for the form-view & export but never charted"
+    },
+    "TEXT4769": {
+      "category": "free_text_note",
+      "reason": "Free-text narrative / RSSD identifier field — captured for the form-view & export but never charted"
+    },
+    "TEXT5594": {
+      "category": "free_text_note",
+      "reason": "Free-text narrative / RSSD identifier field — captured for the form-view & export but never charted"
+    },
+    "TEXT5595": {
+      "category": "free_text_note",
+      "reason": "Free-text narrative / RSSD identifier field — captured for the form-view & export but never charted"
+    },
+    "TEXT6980": {
+      "category": "free_text_note",
+      "reason": "Free-text narrative / RSSD identifier field — captured for the form-view & export but never charted"
+    },
+    "TEXT8901": {
+      "category": "free_text_note",
+      "reason": "Free-text narrative / RSSD identifier field — captured for the form-view & export but never charted"
+    },
+    "TEXT8902": {
+      "category": "free_text_note",
+      "reason": "Free-text narrative / RSSD identifier field — captured for the form-view & export but never charted"
+    },
+    "TEXT9116": {
+      "category": "free_text_note",
+      "reason": "Free-text narrative / RSSD identifier field — captured for the form-view & export but never charted"
+    },
+    "TEXTB926": {
+      "category": "free_text_note",
+      "reason": "Free-text narrative / RSSD identifier field — captured for the form-view & export but never charted"
+    },
+    "TEXTB962": {
+      "category": "free_text_note",
+      "reason": "Free-text narrative / RSSD identifier field — captured for the form-view & export but never charted"
+    },
+    "TEXTB963": {
+      "category": "free_text_note",
+      "reason": "Free-text narrative / RSSD identifier field — captured for the form-view & export but never charted"
+    },
+    "TEXTB964": {
+      "category": "free_text_note",
+      "reason": "Free-text narrative / RSSD identifier field — captured for the form-view & export but never charted"
+    },
+    "TEXTC366": {
+      "category": "free_text_note",
+      "reason": "Free-text narrative / RSSD identifier field — captured for the form-view & export but never charted"
+    },
+    "TEXTC367": {
+      "category": "free_text_note",
+      "reason": "Free-text narrative / RSSD identifier field — captured for the form-view & export but never charted"
+    },
+    "TEXTC368": {
+      "category": "free_text_note",
+      "reason": "Free-text narrative / RSSD identifier field — captured for the form-view & export but never charted"
+    },
+    "TEXTC369": {
+      "category": "free_text_note",
+      "reason": "Free-text narrative / RSSD identifier field — captured for the form-view & export but never charted"
+    },
+    "TEXTC370": {
+      "category": "free_text_note",
+      "reason": "Free-text narrative / RSSD identifier field — captured for the form-view & export but never charted"
+    },
+    "TEXTC371": {
+      "category": "free_text_note",
+      "reason": "Free-text narrative / RSSD identifier field — captured for the form-view & export but never charted"
+    },
+    "TEXTC372": {
+      "category": "free_text_note",
+      "reason": "Free-text narrative / RSSD identifier field — captured for the form-view & export but never charted"
+    },
+    "TEXTC373": {
+      "category": "free_text_note",
+      "reason": "Free-text narrative / RSSD identifier field — captured for the form-view & export but never charted"
+    },
+    "TEXTC374": {
+      "category": "free_text_note",
+      "reason": "Free-text narrative / RSSD identifier field — captured for the form-view & export but never charted"
+    },
+    "TEXTC375": {
+      "category": "free_text_note",
+      "reason": "Free-text narrative / RSSD identifier field — captured for the form-view & export but never charted"
+    },
+    "TEXTC437": {
+      "category": "free_text_note",
+      "reason": "Free-text narrative / RSSD identifier field — captured for the form-view & export but never charted"
+    },
+    "TEXTC438": {
+      "category": "free_text_note",
+      "reason": "Free-text narrative / RSSD identifier field — captured for the form-view & export but never charted"
+    },
+    "TEXTC439": {
+      "category": "free_text_note",
+      "reason": "Free-text narrative / RSSD identifier field — captured for the form-view & export but never charted"
+    },
+    "TEXTC440": {
+      "category": "free_text_note",
+      "reason": "Free-text narrative / RSSD identifier field — captured for the form-view & export but never charted"
+    },
+    "TEXTC441": {
+      "category": "free_text_note",
+      "reason": "Free-text narrative / RSSD identifier field — captured for the form-view & export but never charted"
+    },
+    "TEXTC442": {
+      "category": "free_text_note",
+      "reason": "Free-text narrative / RSSD identifier field — captured for the form-view & export but never charted"
+    },
+    "TEXTC443": {
+      "category": "free_text_note",
+      "reason": "Free-text narrative / RSSD identifier field — captured for the form-view & export but never charted"
+    },
+    "TEXTC444": {
+      "category": "free_text_note",
+      "reason": "Free-text narrative / RSSD identifier field — captured for the form-view & export but never charted"
+    },
+    "TEXTC445": {
+      "category": "free_text_note",
+      "reason": "Free-text narrative / RSSD identifier field — captured for the form-view & export but never charted"
+    },
+    "TEXTC446": {
+      "category": "free_text_note",
+      "reason": "Free-text narrative / RSSD identifier field — captured for the form-view & export but never charted"
+    },
+    "TEXTC490": {
+      "category": "free_text_note",
+      "reason": "Free-text narrative / RSSD identifier field — captured for the form-view & export but never charted"
+    },
+    "TEXTC491": {
+      "category": "free_text_note",
+      "reason": "Free-text narrative / RSSD identifier field — captured for the form-view & export but never charted"
+    },
+    "TEXTC492": {
+      "category": "free_text_note",
+      "reason": "Free-text narrative / RSSD identifier field — captured for the form-view & export but never charted"
+    },
+    "TEXTC493": {
+      "category": "free_text_note",
+      "reason": "Free-text narrative / RSSD identifier field — captured for the form-view & export but never charted"
+    },
+    "TEXTC494": {
+      "category": "free_text_note",
+      "reason": "Free-text narrative / RSSD identifier field — captured for the form-view & export but never charted"
+    },
+    "TEXTC495": {
+      "category": "free_text_note",
+      "reason": "Free-text narrative / RSSD identifier field — captured for the form-view & export but never charted"
+    },
+    "TEXTC496": {
+      "category": "free_text_note",
+      "reason": "Free-text narrative / RSSD identifier field — captured for the form-view & export but never charted"
+    },
+    "TEXTC870": {
+      "category": "free_text_note",
+      "reason": "Free-text narrative / RSSD identifier field — captured for the form-view & export but never charted"
+    },
+    "TEXTC871": {
+      "category": "free_text_note",
+      "reason": "Free-text narrative / RSSD identifier field — captured for the form-view & export but never charted"
+    },
+    "TEXTC872": {
+      "category": "free_text_note",
+      "reason": "Free-text narrative / RSSD identifier field — captured for the form-view & export but never charted"
+    },
+    "TEXTC873": {
+      "category": "free_text_note",
+      "reason": "Free-text narrative / RSSD identifier field — captured for the form-view & export but never charted"
+    },
+    "TEXTC874": {
+      "category": "free_text_note",
+      "reason": "Free-text narrative / RSSD identifier field — captured for the form-view & export but never charted"
+    },
+    "TEXTC875": {
+      "category": "free_text_note",
+      "reason": "Free-text narrative / RSSD identifier field — captured for the form-view & export but never charted"
+    },
+    "TEXTC876": {
+      "category": "free_text_note",
+      "reason": "Free-text narrative / RSSD identifier field — captured for the form-view & export but never charted"
+    },
+    "TEXTC877": {
+      "category": "free_text_note",
+      "reason": "Free-text narrative / RSSD identifier field — captured for the form-view & export but never charted"
+    },
+    "TEXTC878": {
+      "category": "free_text_note",
+      "reason": "Free-text narrative / RSSD identifier field — captured for the form-view & export but never charted"
+    },
+    "TEXTC879": {
+      "category": "free_text_note",
+      "reason": "Free-text narrative / RSSD identifier field — captured for the form-view & export but never charted"
+    },
+    "TEXTF657": {
+      "category": "free_text_note",
+      "reason": "Free-text narrative / RSSD identifier field — captured for the form-view & export but never charted"
+    },
+    "TEXTF660": {
+      "category": "free_text_note",
+      "reason": "Free-text narrative / RSSD identifier field — captured for the form-view & export but never charted"
+    },
+    "TEXTFT42": {
+      "category": "free_text_note",
+      "reason": "Free-text narrative / RSSD identifier field — captured for the form-view & export but never charted"
+    },
+    "TEXTFT43": {
+      "category": "free_text_note",
+      "reason": "Free-text narrative / RSSD identifier field — captured for the form-view & export but never charted"
+    },
+    "TEXTFT44": {
+      "category": "free_text_note",
+      "reason": "Free-text narrative / RSSD identifier field — captured for the form-view & export but never charted"
+    },
+    "TEXTFT45": {
+      "category": "free_text_note",
+      "reason": "Free-text narrative / RSSD identifier field — captured for the form-view & export but never charted"
+    },
+    "TEXTG586": {
+      "category": "free_text_note",
+      "reason": "Free-text narrative / RSSD identifier field — captured for the form-view & export but never charted"
+    }
+  },
+  "_spurious_description": "spurious_allowed: hierarchy LEAF codes legitimately absent from the panel (text/admin fields or valid-but-unfiled form lines greyed-out per C4). The bidirectional gate FAILS on any hierarchy leaf code never reported in the panel that is NOT listed here — so genuine parse artifacts must be dropped via *_hierarchy_overrides.json drop_codes, not parked here."
+}

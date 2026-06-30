@@ -1,0 +1,11 @@
+# FFIEC 031/041/051 Call Reports explorer — Python dependencies
+# Install:  pip install -r requirements.txt
+#
+# pandas/pyarrow : parse FFIEC CDR bulk download files, build/read the parquet panel
+# playwright     : real-Chrome downloader for Akamai-guarded FFIEC CDR endpoints
+# requests       : fallback HTTP for non-guarded endpoints
+# (DuckDB runs client-side as DuckDB-WASM in the browser — no Python duckdb needed here.)
+pandas>=2.0
+pyarrow>=12.0
+playwright>=1.40
+requests>=2.28
