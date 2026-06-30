@@ -119,6 +119,13 @@ body:not(.dark) #ec-tip{--tip-bg:#fff;--tip-fg:#14213d;border-color:#cdd5e0;box-
 #lbl-overlay{position:fixed;z-index:30;background:var(--bg,#fff);border:1px solid var(--border,#cdd5e0);border-radius:8px;padding:6px 10px;font-size:13px;box-shadow:0 3px 12px rgba(0,0,0,.18);resize:both;overflow:auto;min-width:100px;min-height:32px;cursor:move;user-select:none;box-sizing:border-box;display:none}
 body.dark #lbl-overlay{background:#0f1825;border-color:#2a3547}
 #lbl-overlay::after{content:"\2921";position:absolute;right:4px;bottom:1px;font-size:11px;line-height:1;color:var(--muted,#9aa3b2);opacity:.5;pointer-events:none}
+/* resizable non-chart panels */
+#cards{resize:horizontal;overflow:hidden;max-width:100%;min-width:200px;box-sizing:border-box}
+#mchips{resize:horizontal;overflow:hidden;max-width:100%;min-width:100px;box-sizing:border-box}
+#snapshot{resize:horizontal;overflow:auto;max-width:100%;min-width:200px;box-sizing:border-box}
+#tbl{resize:horizontal;overflow:auto;max-width:100%;min-width:200px;box-sizing:border-box}
+#calcdiv{resize:horizontal;overflow:auto;box-sizing:border-box}
+#peerbox{resize:horizontal;overflow:auto;max-width:100%;min-width:200px;box-sizing:border-box}
 #formulatip{position:fixed;pointer-events:none;z-index:55;background:var(--tip-bg,#1a2535);color:var(--tip-fg,#e6e9ef);border:1px solid #3a4a5e;border-radius:6px;padding:7px 11px;font-size:13px;line-height:1.5;display:none;box-shadow:0 3px 12px rgba(0,0,0,.35);max-width:320px;white-space:normal}
 #formulatip .ftip-lbl{font-weight:600;color:#9aa3b2;font-size:12px;letter-spacing:.3px;text-transform:uppercase;margin-bottom:3px}
 body:not(.dark) #formulatip{--tip-bg:#fff;--tip-fg:#14213d;border-color:#cdd5e0;box-shadow:0 3px 12px rgba(0,0,0,.12)}
@@ -227,7 +234,7 @@ body:not(.dark) .lgon-row td{background:#e8f5e9!important}body.dark .lgon-row td
    <textarea id="sql">SELECT quarter_end, value FROM t WHERE entity_id='ALL' AND mdrm='COMB2170' ORDER BY quarter_end;</textarea>
    <div style="margin-top:8px"><button id="runsql" class="sec">Run</button> <button id="sqlcsv" class="sec">Export result</button></div>
    <div id="sqlout"></div></details>
-  <div class="credit">Built by Austin Fahrenkopf &middot; data: public FFIEC filings &middot; Built 2026-06-30 10:22</div>
+  <div class="credit">Built by Austin Fahrenkopf &middot; data: public FFIEC filings &middot; Built 2026-06-30 11:14</div>
  </div>
 </div>
 <div id="formmodal" class="modal" style="display:none"><div class="modalbox">
@@ -657,6 +664,7 @@ async function init(){try{
  if(!restored){active=[{id:'ALL',label:'ALL'}];}
  if(!measures.length){try{const s=localStorage.getItem('ffiec_call_measures');if(s){const ms=JSON.parse(s);if(Array.isArray(ms)&&ms.length)measures=ms.slice(0,6);}}catch{}if(!measures.length)measures=[{code:'COMB2170',label:'Total assets',pct:false}];}
  renderChips(); renderMeasures(); renderPeerSaved();
+ initWidthResize('cards','ffiec_call_cardsw');initWidthResize('mchips','ffiec_call_legendw');initWidthResize('tbl','ffiec_call_tblw');initWidthResize('snapshot','ffiec_call_snapw');initWidthResize('calcdiv','ffiec_call_calcdivw');initWidthResize('peerbox','ffiec_call_peerbuilderw');
  st(`Ready — ${ents.length} entities. Click items on the left; add entities to compare.`);pbar(100); recompute(); autoLoadFormulas();
  {const _rp=new URLSearchParams(location.hash.slice(1));if(_rp.get('report')==='1'&&active.length===1&&active[0].id.startsWith('BANK:'))openReport(active[0].id);}
 }catch(e){st('Load failed: '+e);console.error(e);}}
@@ -1013,6 +1021,13 @@ function syncSlider(){const n=Qall.length;const w=document.getElementById('slide
 function onSlide(){let a=+document.getElementById('r0').value,b=+document.getElementById('r1').value;
  rangeSel={a:Math.min(a,b),b:Math.max(a,b)};
  document.getElementById('rfrom').value=Qall[rangeSel.a];document.getElementById('rto').value=Qall[rangeSel.b];draw();}
+function initWidthResize(id,lsKey){const el=document.getElementById(id);if(!el)return;
+  let _wr_init=true;
+  new ResizeObserver(es=>{if(_wr_init){_wr_init=false;return;}const w=Math.round(es[0].contentRect.width);if(w<40)return;try{localStorage.setItem(lsKey,w);}catch(_){}}).observe(el);
+  try{const w=+localStorage.getItem(lsKey);if(w>40)el.style.width=w+'px';}catch(_){}}
+function initModalResize(modalId,lsKey){const modal=document.getElementById(modalId);if(!modal)return;const box=modal.querySelector('.modalbox');if(!box||box._mrInit)return;box._mrInit=true;
+  try{const sz=localStorage.getItem(lsKey);if(sz){const[w,h]=sz.split('x');if(+w>100)box.style.width=+w+'px';if(+h>100)box.style.height=+h+'px';}}catch(_){}
+  let _mr_init=true;new ResizeObserver(es=>{if(_mr_init){_mr_init=false;return;}const w=Math.round(es[0].contentRect.width),h=Math.round(es[0].contentRect.height);if(w<100||h<100)return;try{localStorage.setItem(lsKey,w+'x'+h);}catch(_){}}).observe(box);}
 function renderLblOverlay(series,show){
   let box=document.getElementById('lbl-overlay');
   if(!show||!series||!series.length){if(box)box.style.display='none';return;}
@@ -1289,6 +1304,7 @@ async function renderLeague(){
  body.querySelectorAll('.lgs').forEach(th=>th.onclick=()=>{const f=th.dataset.f;if(lgSortField===f)lgSortDir*=-1;else{lgSortField=f;lgSortDir=-1;}renderLeague();});
  body.querySelectorAll('.lglink').forEach(td=>{td.onclick=()=>{const id=td.dataset.id,nm=td.dataset.nm;if(!active.find(a=>a.id===id))active.push({id,label:nm});renderChips();scheduleRecompute();};});}
 async function openLeague(){
+ initModalResize('leaguemodal','ffiec_call_leaguemsz');
  LGMEAS=buildLGMEAS();
  const msel=document.getElementById('lgmeasure');
  msel.innerHTML=LGMEAS.map((m,i)=>`<option value="${i}">${m.label}</option>`).join('');
@@ -1299,7 +1315,7 @@ async function openLeague(){
 // ---- call-report view (drill-down hierarchy + time-frame columns) ----
 function renderFentChips(){const c=document.getElementById('fent-chips');if(!c)return;const ents=window._feEnts||[];c.innerHTML=ents.map((ent,i)=>`<span style="display:inline-flex;align-items:center;gap:2px;padding:2px 5px;background:var(--head,#eef2f7);border-radius:3px;font-size:13px">${ent.label}<span class="fent-del" data-i="${i}" style="cursor:pointer;color:#c0392b;margin-left:3px">×</span></span>`).join('');for(const d of document.querySelectorAll('.fent-del'))d.onclick=()=>{(window._feEnts||[]).splice(+d.dataset.i,1);renderFentChips();renderForm();};}
 function fentIds(){const ents=window._feEnts||[];const ids=[];for(const ent of ents)for(const id of expand(ent.id))ids.push(id);return [...new Set(ids)];}
-async function openForm(){if(!HIER){showToast('Hierarchy file not loaded.');return;}
+async function openForm(){initModalResize('formmodal','ffiec_call_formmsz');if(!HIER){showToast('Hierarchy file not loaded.');return;}
  const initE=active[0]||resolveEnt();
  if(!initE&&(!window._feEnts||!window._feEnts.length)){document.getElementById('formmodal').style.display='flex';document.getElementById('formbody').innerHTML='<p class="muted">Add a bank using the input above.</p>';return;}
  if(!window._feEnts||!window._feEnts.length){window._feEnts=active.length?active.filter(e=>e.id.startsWith('BANK:')||e.id.startsWith('PEER:')):[initE];}
@@ -1344,6 +1360,7 @@ function dl2(c,rows,nm){if(!rows.length){showToast('Nothing to export.');return;
 // ---- entity report (V2) ----
 async function openReport(entityId){
  if(!entityId||!entityId.startsWith('BANK:'))return;
+ initModalResize('reportmodal','ffiec_call_reportmsz');
  {const p=new URLSearchParams(location.hash.slice(1));p.set('report','1');history.replaceState(null,'','#'+p.toString());}
  document.getElementById('reportmodal').style.display='';
  const nm=id2lbl.get(entityId)||entityId;
@@ -1553,7 +1570,7 @@ async function ebEstimate(){
  if(el){el.innerHTML=`Estimated rows: <b>~${nR.toLocaleString()}</b> (${nC.toLocaleString()} codes × ${nQ} qtrs × ${nE} entities)`+(warn&&!block?' <span style="color:#e07a1f">⚠ large export</span>':'')+(block?' <span style="color:#c0392b">⛔ too large — narrow scope or date range first</span>':'');
    const btn=document.getElementById('expbld-run');if(btn)btn.disabled=block;}
  return nR;}
-function openExportBuilder(){document.getElementById('exportmodal').style.display='flex';renderExportUI();}
+function openExportBuilder(){initModalResize('exportmodal','ffiec_call_exportmsz');document.getElementById('exportmodal').style.display='flex';renderExportUI();}
 async function renderExportUI(){
  const body=document.getElementById('expbldbody');
  const hierKeys=HIER?[...FORM_ORDER.filter(k=>HIER[k]),...Object.keys(HIER).filter(k=>SCHED_NAMES[k]&&!FORM_ORDER.includes(k))]:[];
