@@ -234,7 +234,7 @@ body:not(.dark) .lgon-row td{background:#e8f5e9!important}body.dark .lgon-row td
    <textarea id="sql">SELECT quarter_end, value FROM t WHERE entity_id='ALL' AND mdrm='COMB2170' ORDER BY quarter_end;</textarea>
    <div style="margin-top:8px"><button id="runsql" class="sec">Run</button> <button id="sqlcsv" class="sec">Export result</button></div>
    <div id="sqlout"></div></details>
-  <div class="credit">Built by Austin Fahrenkopf &middot; data: public FFIEC filings &middot; Built 2026-07-01 08:14</div>
+  <div class="credit">Built by Austin Fahrenkopf &middot; data: public FFIEC filings &middot; Built 2026-07-01 13:53</div>
  </div>
 </div>
 <div id="formmodal" class="modal" style="display:none"><div class="modalbox">
@@ -348,6 +348,12 @@ const DERIV={
  // RCON/RCFD items are coalesced as COMB<base> in the tree; key on COMBHK05 not RCONHK05.
  'COMBHK05':{type:'hybrid_sum',parts:[{reported:'RCONHK05',components:['RCONHK06','RCONK220']}]},
  'RCFN2200':{type:'hybrid_sum',parts:[{reported:'RCFN2200',components:['RCFN6631','RCFN6636']}]},
+ // RC-N item 9 totals — gap 2001-Q1→2016-Q4 filled by summing RC-N items 1-8 leaf codes (per column).
+ // Validation: 0.25%/0.15%/0.80% mean error vs reported in post-gap overlap 2017-Q1→2026-Q1.
+ // Caveat: COMBK213-K218 (consumer auto/other) absent pre-2011-Q1 → ~4% understatement 2001-2010.
+ 'COMB1406':{type:'hybrid_sum',parts:[{reported:'COMB1406',components:['COMBF172','COMBF173','COMB3493','COMB5398','COMBC236','COMBC238','COMB3499','COMBF178','COMBF179','RCFNB572','COMB5377','COMB5380','COMB1594','COMB1251','COMB1254','COMB1606','COMBB575','COMBK213','COMBK216','COMB5389','COMB5459','COMBF166','COMBF169']}]},
+ 'COMB1407':{type:'hybrid_sum',parts:[{reported:'COMB1407',components:['COMBF174','COMBF175','COMB3494','COMB5399','COMBC237','COMBC239','COMB3500','COMBF180','COMBF181','RCFNB573','COMB5378','COMB5381','COMB1597','COMB1252','COMB1255','COMB1607','COMBB576','COMBK214','COMBK217','COMB5390','COMB5460','COMBF167','COMBF170']}]},
+ 'COMB1403':{type:'hybrid_sum',parts:[{reported:'COMB1403',components:['COMBF176','COMBF177','COMB3495','COMB5400','COMBC229','COMBC230','COMB3501','COMBF182','COMBF183','RCFNB574','COMB5379','COMB5382','COMB1583','COMB1253','COMB1256','COMB1608','COMBB577','COMBK215','COMBK218','COMB5391','COMB5461','COMBF168','COMBF171']}]},
 };
 const DYN={};   // dynamic subtotal measures created by clicking a grouping row in the tree
 const USERCALC={};  // user-defined custom calculated series (persisted via Save formulas → localStorage)
@@ -1793,7 +1799,7 @@ async function runsql(){try{const r=(await conn.query(document.getElementById('s
       const fv=s.pct?(+v).toFixed(2)+'%':fmtUnit(v,false);
       const tpts=s.label.split(' \xb7 ');const nE=active.length,nM=measures.length;const tl=(nE>1&&nM===1?tpts[0]:(nE===1&&nM>1?tpts.slice(1).join(' · '):s.label));
       html+=`<div class="tip-row"><span class="tip-sw" style="background:${s.color}"></span>${tl}: <b>${fv}</b></div>`;}
-    if(window._hybridOnChart){const _rn=[];if(measures.some(m=>m.code==='COMBHK05')&&q>='2011-03-31'&&q<='2016-12-31')_rn.push('RC-E M.1.c from K220±5.5%');if(measures.some(m=>m.code==='RCFN2200')&&q>='1983-06-30'&&q<='1983-12-31')_rn.push('RC 13.b from 6636');if(_rn.length)html+=`<div style="font-size:11px;color:#64748b;margin-top:2px;font-style:italic">⚠ Reconstructed: ${_rn.join('; ')}</div>`;}
+    if(window._hybridOnChart){const _rn=[];if(measures.some(m=>m.code==='COMBHK05')&&q>='2011-03-31'&&q<='2016-12-31')_rn.push('RC-E M.1.c from K220\xb15.5%');if(measures.some(m=>m.code==='RCFN2200')&&q>='1983-06-30'&&q<='1983-12-31')_rn.push('RC 13.b from 6636');const _rcn9=(m=>m==='COMB1406'||m==='COMB1407'||m==='COMB1403');if(measures.some(m=>_rcn9(m.code))&&q>='2001-03-31'&&q<='2016-12-31'){const _early=q<='2010-12-31';_rn.push('RC-N item 9 from items 1-8 components \xb1'+(measures.some(m=>m.code==='COMB1406')?'0.25':'0.15-0.80')+'%'+(_early?' (lower bound ~4%, consumer sub-codes absent 2001-2010)':''));}if(_rn.length)html+=`<div style="font-size:11px;color:#64748b;margin-top:2px;font-style:italic">⚠ Reconstructed: ${_rn.join('; ')}</div>`;}
     html+=`<div style="font-size:12px;color:#9aa3b2;margin-top:3px;opacity:.6">click to pin</div>`;
     tip.innerHTML=html;tip.style.display='block';
     let tx=qScreenX+14;if(tx+tip.offsetWidth>window.innerWidth-8)tx=qScreenX-14-tip.offsetWidth;if(tx<8)tx=8;
