@@ -223,7 +223,7 @@ body:not(.dark) .lgon-row td{background:#e8f5e9!important}body.dark .lgon-row td
    <input type="text" id="rfrom" list="qlist" size="10" style="font:inherit;font-size:13px;border:1px solid var(--border,#ccc);border-radius:3px;padding:1px 4px;background:inherit;color:inherit"><span class="muted">to</span><input type="text" id="rto" list="qlist" size="10" style="font:inherit;font-size:13px;border:1px solid var(--border,#ccc);border-radius:3px;padding:1px 4px;background:inherit;color:inherit"><datalist id="qlist"></datalist> <button id="preset1y" class="sec" style="padding:3px 8px;font-size:13px">1Y</button><button id="preset5y" class="sec" style="padding:3px 8px;font-size:13px">5Y</button><button id="preset10y" class="sec" style="padding:3px 8px;font-size:13px">10Y</button><button id="rreset" class="sec" style="padding:3px 8px;font-size:13px">All</button>
    <label class="muted" title="rebase each $ series to 100 at the start of the range"><input type="checkbox" id="idx"> index to 100</label>
    <label class="muted" title="show quarter-over-quarter absolute change instead of level"><input type="checkbox" id="qoqdelta"> QoQ Δ</label>
-   <label class="muted" title="divide each $ series by total assets (RCFD2170), producing a % ratio"><input type="checkbox" id="normbyassets"> ÷ assets</label>
+   <label class="muted" title="divide each $ series by total assets (COMB2170 = RCFD or RCON, covers all charter types), producing a % ratio"><input type="checkbox" id="normbyassets"> ÷ assets</label>
    <label class="muted" title="render $ series as stacked areas (additive measures only — disabled for % / ratio series)"><input type="checkbox" id="stackedmode"> ◫ Stacked</label>
    <label class="muted" title="show end-of-line series labels in a draggable overlay"><input type="checkbox" id="inlinelbls"> inline labels</label>
    <span class="muted" style="font-size:13px;white-space:nowrap">⟵<input id="reflineval" type="text" placeholder="ref line e.g. 8 or 5e6" style="width:100px;font-size:13px;padding:1px 4px;border:1px solid var(--border,#ccc);background:inherit;color:inherit;border-radius:3px"><input id="reflinelbl" type="text" placeholder="label" style="width:60px;font-size:13px;padding:1px 4px;border:1px solid var(--border,#ccc);background:inherit;color:inherit;border-radius:3px"><button id="reflineset" class="sec" style="padding:1px 6px;font-size:13px">Set</button><button id="reflineclr" class="sec" style="padding:1px 6px;font-size:13px">✕</button></span>
@@ -234,7 +234,7 @@ body:not(.dark) .lgon-row td{background:#e8f5e9!important}body.dark .lgon-row td
    <textarea id="sql">SELECT quarter_end, value FROM t WHERE entity_id='ALL' AND mdrm='COMB2170' ORDER BY quarter_end;</textarea>
    <div style="margin-top:8px"><button id="runsql" class="sec">Run</button> <button id="sqlcsv" class="sec">Export result</button></div>
    <div id="sqlout"></div></details>
-  <div class="credit">Built by Austin Fahrenkopf &middot; data: public FFIEC filings &middot; Built 2026-06-30 23:09</div>
+  <div class="credit">Built by Austin Fahrenkopf &middot; data: public FFIEC filings &middot; Built 2026-06-30 23:33</div>
  </div>
 </div>
 <div id="formmodal" class="modal" style="display:none"><div class="modalbox">
@@ -1027,7 +1027,7 @@ async function recompute(){
    out.push({label,pct:m.pct,rows,color:COLORS[ci++%COLORS.length],eid:e.id});}
  lastSeries=out;
  const qs=new Set();for(const s of out)for(const r of s.rows)qs.add(r[0]);
- _assetRows.clear();for(const e of active){if(mySeq!==_rcSeq)return;const ar=await seriesFor(e.id,'RCFD2170');_assetRows.set(e.id,Object.fromEntries(ar.map(r=>[r[0],r[1]])));}
+ _assetRows.clear();for(const e of active){if(mySeq!==_rcSeq)return;const ar=await seriesFor(e.id,'COMB2170');_assetRows.set(e.id,Object.fromEntries(ar.map(r=>[r[0],r[1]])));}
  Qall=[...qs].sort(); rangeSel={a:0,b:Math.max(0,Qall.length-1)}; syncSlider(); draw();stateToHash();}
 function syncSlider(){const n=Qall.length;const w=document.getElementById('sliderwrap');
  if(n<2){w.style.display='none';return;}w.style.display='flex';
