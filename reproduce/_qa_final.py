@@ -18,27 +18,60 @@ def check(name, path, patterns):
         else:
             results.append(('OK',   name, label))
 
+def check_lgmeas_wiring(name, path):
+    """
+    Verify buildLGMEAS is wired: function defined, assigned to LGMEAS at startup,
+    and the #lgmeasure select is populated from it.
+
+    League option COUNT is not statically verifiable (options are generated at runtime
+    from the hierarchy JSON). Use validate_build_call.py LGMEAS check for that.
+    """
+    try:
+        html = open(path, encoding='utf-8').read()
+    except FileNotFoundError:
+        results.append(('WARN', name, 'lgmeas wiring skipped: file not found'))
+        return
+    for label, pat in [
+        ('buildLGMEAS defined',   r'function buildLGMEAS'),
+        ('LGMEAS assigned',       r'LGMEAS\s*=\s*buildLGMEAS\('),
+        ('lgmeasure select',      r'id="lgmeasure"'),
+    ]:
+        if not re.search(pat, html):
+            results.append(('FAIL', name, f'lgmeas wiring: missing {label}'))
+        else:
+            results.append(('OK',   name, f'lgmeas wiring: {label}'))
+
 # Y-9C checks
 check('Y-9C', r'FR Y-9C\site_fry9c\index.html', [
-    ('prevQtr helper',         r'function prevQtr'),
-    ('yoyQtr helper',          r'function yoyQtr'),
-    ('pctChg sign-flip guard', r'sameSign'),
-    ('descCodes PCTC filter',  r'PCTC\.has\(c\.code\)'),
-    ('hasPctDesc',             r'function hasPctDesc'),
-    ('perFilerValues DYN',     r'DYN\[measCode\]'),
-    ('isRawPct (Y-9C)',        r'isRawPct'),
-    ('isAggScope (Y-9C)',      r'isAggScope'),
-    ('NESTED topholder',       r'NESTED'),
-    ('allCond top-tier',       r'function allCond'),
+    ('prevQtr helper',          r'function prevQtr'),
+    ('yoyQtr helper',           r'function yoyQtr'),
+    ('pctChg sign-flip guard',  r'sameSign'),
+    ('descCodes PCTC filter',   r'PCTC\.has\(c\.code\)'),
+    ('hasPctDesc',              r'function hasPctDesc'),
+    ('perFilerValues DYN',      r'DYN\[measCode\]'),
+    ('isRawPct (Y-9C)',         r'isRawPct'),
+    ('isAggScope (Y-9C)',       r'isAggScope'),
+    ('NESTED topholder',        r'NESTED'),
+    ('allCond top-tier',        r'function allCond'),
+    # §NORMDEN-LEAGUE-FRY9C
+    ('NORM_DEN_LABELS dropdown', r'NORM_DEN_LABELS'),
+    ('normden select',           r'id="normden"'),
 ])
+check_lgmeas_wiring('Y-9C', r'FR Y-9C\site_fry9c\index.html')
 
 # 002 checks
 check('002', r'FFIEC 002\site_002\index.html', [
-    ('prevQtr helper',   r'function prevQtr'),
-    ('yoyQtr helper',    r'function yoyQtr'),
-    ('pctChg sign-flip', r'sameSign'),
-    ('perFilerValues',   r'perFilerValues'),
+    ('prevQtr helper',    r'function prevQtr'),
+    ('yoyQtr helper',     r'function yoyQtr'),
+    ('pctChg sign-flip',  r'sameSign'),
+    ('perFilerValues',    r'perFilerValues'),
+    # §NORMDEN-LEAGUE-002
+    ('NORM_DEN_LABELS dropdown', r'NORM_DEN_LABELS'),
+    ('normden select',           r'id="normden"'),
+    # 002-specific: _ND2205 pre-computed WASM hang workaround (PERMANENT — never revert)
+    ('_ND2205 precomputed',      r'_ND2205'),
 ])
+check_lgmeas_wiring('002', r'FFIEC 002\site_002\index.html')
 
 # Call checks
 check('Call', r'FFIEC 031\site_call\index.html', [
@@ -50,7 +83,13 @@ check('Call', r'FFIEC 031\site_call\index.html', [
     ('isRawPct (Call)',      r'isRawPct'),
     ('isAggScope (Call)',    r'isAggScope'),
     ('blocked label',       r'not summable across entities'),
+    # §NORMDEN-LEAGUE-CALL
+    ('NORM_DEN_LABELS dropdown', r'NORM_DEN_LABELS'),
+    ('normden select',           r'id="normden"'),
+    # §IBF-DEPOSIT-REBUILD: COMB2200 as deposits denominator (not RCON2200)
+    ('COMB2200 deposits normden', r'COMB2200'),
 ])
+check_lgmeas_wiring('Call', r'FFIEC 031\site_call\index.html')
 
 # Golden cell check (Y-9C panel)
 try:
