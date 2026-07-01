@@ -14,17 +14,55 @@ import duckdb
 con = duckdb.connect(); con.execute("PRAGMA threads=4")
 con.execute("CREATE VIEW t0 AS SELECT * FROM read_parquet('cdr_parquet/*.parquet')")
 
+# 0a) Synthesize RCFD deposit codes for 031 filers that operate IBFs.
+#
+#     On the FFIEC Call Report, total deposits for a 031 filer are split across TWO codes:
+#       RCON2200  = domestic-office deposits
+#       RCFN2200  = IBF (International Banking Facility) deposits
+#     RCFD2200 (consolidated total) does NOT exist as a reported code on the form.
+#     Correct consolidated deposits = RCON + RCFN (additive: separate geographic pools).
+#
+#     Without this step, COMB2200 = COALESCE(null, RCON2200) = domestic-only, understating
+#     system deposits by ~$1.72T (9.1%) for all aggregate entities.
+#
+#     Parallel structure confirmed for sub-totals: 6631 (non-IB deposits) and 6636
+#     (interest-bearing deposits) also have RCON+RCFN but no RCFD.
+#     Codes 2625/2650/2898/2133 have RCFN but no RCON counterpart — NOT synthesized.
+#
+#     Empirically verified (Q1 2026): RCFN6631+RCFN6636 = RCFN2200 exactly; deposit/assets
+#     ratios (69-90%) are sensible; RCFD2200 is absent from all 201 quarters of raw data.
+print("0a) synthesizing RCFD deposit codes (2200/6631/6636) for 031 IBF filers ...")
+con.execute("""
+CREATE TEMP TABLE t_synth AS
+SELECT quarter_end, id_rssd, any_value(entity_type) AS entity_type,
+       'RCFD'||substr(mdrm,5,4) AS mdrm,
+       sum(value) AS value
+FROM t0
+WHERE substr(mdrm,5,4) IN ('2200','6631','6636')
+  AND substr(mdrm,1,4) IN ('RCON','RCFN')
+GROUP BY quarter_end, id_rssd, substr(mdrm,5,4)
+HAVING max(CASE WHEN substr(mdrm,1,4)='RCFN' THEN value END) IS NOT NULL
+   AND max(CASE WHEN substr(mdrm,1,4)='RCFN' THEN value END) > 0
+""")
+n_synth = con.execute("SELECT count(*) FROM t_synth").fetchone()[0]
+print(f"   synthesized {n_synth:,} RCFD deposit rows (RCON+RCFN where RCFN>0)")
+
 print("0) building COMBINED (RCFD/RCON/RIAD) items ...")
 con.execute("""
 CREATE TEMP TABLE t AS
 SELECT quarter_end, id_rssd, entity_type, mdrm, value FROM t0
+UNION ALL
+SELECT quarter_end, id_rssd, entity_type, mdrm, value FROM t_synth
 UNION ALL
 SELECT quarter_end, id_rssd, any_value(entity_type) AS entity_type,
        'COMB'||substr(mdrm,5,4) AS mdrm,
        COALESCE(max(CASE WHEN substr(mdrm,1,4)='RCFD' THEN value END),
                 max(CASE WHEN substr(mdrm,1,4)='RCON' THEN value END),
                 max(CASE WHEN substr(mdrm,1,4)='RIAD' THEN value END)) AS value
-FROM t0 WHERE substr(mdrm,1,4) IN ('RCFD','RCON','RIAD')
+FROM (SELECT quarter_end, id_rssd, entity_type, mdrm, value FROM t0
+      UNION ALL
+      SELECT quarter_end, id_rssd, entity_type, mdrm, value FROM t_synth)
+WHERE substr(mdrm,1,4) IN ('RCFD','RCON','RIAD')
 GROUP BY quarter_end, id_rssd, substr(mdrm,5,4)
 HAVING COALESCE(max(CASE WHEN substr(mdrm,1,4)='RCFD' THEN value END),
                 max(CASE WHEN substr(mdrm,1,4)='RCON' THEN value END),
